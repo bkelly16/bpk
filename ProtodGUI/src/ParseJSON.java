@@ -83,9 +83,6 @@ public class ParseJSON {
             JSONObject valueObject = (JSONObject) valueArray.get(0); // grab first entry in Array
             printJSONObject(valueObject);
             
-            //store values
-            //set1.initializeSet(listofMeasurements.size());
-            //System.out.println(listofMeasurements.size());
             
             set1.timeStamp.add((long) valueObject.get("t"));
             set1.cpuLoad.add((double) valueObject.get("c"));

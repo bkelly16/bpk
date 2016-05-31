@@ -1,17 +1,12 @@
 
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Iterator;
 import java.util.Random;
-import org.json.simple.JSONArray;
-import org.json.simple.JSONObject;
 
 
 
 public class DataSet {
-    public DataSet() {
-        this.timeStamp = new ArrayList<>();
-    }  
+  
+    public String filePath = "F:\\Work\\Log Files\\daemon.properJSON.plf"; 
     // Headers
     long dateStamp = 0;
     String machineID = "This Is The Default Meassage";
@@ -33,15 +28,15 @@ public class DataSet {
     //long[] dataBus; // = new long[numSamples];
     //long[] networkBus;// = new long[numSamples];
     
-    ArrayList<Long> timeStamp = new ArrayList<>(maxSamples);
-    ArrayList<Double> cpuLoad = new ArrayList<>(maxSamples);
-    ArrayList<Long> memLoad = new ArrayList<>(maxSamples);
-    ArrayList<Long> dataBus = new ArrayList<>(maxSamples);
-    ArrayList<Long> networkBus = new ArrayList<>(maxSamples);
+    public ArrayList<Long> timeStamp = new ArrayList<>(maxSamples);
+    public ArrayList<Double> cpuLoad = new ArrayList<>(maxSamples);
+    public ArrayList<Long> memLoad = new ArrayList<>(maxSamples);
+    public ArrayList<Long> dataBus = new ArrayList<>(maxSamples);
+    public ArrayList<Long> networkBus = new ArrayList<>(maxSamples);
     
-    /**
-    public void initializeSet(int num_meas){
-        for (int i = 1; i < num_meas; i++) {
+    
+    public void initializeSet(){
+        for (int i = 1; i < maxSamples; i++) {
         timeStamp.add(new Long(0));
         cpuLoad.add(new Double(0));
         memLoad.add(new Long(0));
@@ -54,7 +49,7 @@ public class DataSet {
         //networkBus[i] = 0;
         }        
     }
-    */
+    
     
  
    

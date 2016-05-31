@@ -1,3 +1,6 @@
+
+import java.awt.Color;
+
 /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
@@ -38,6 +41,7 @@ public class ProtodGUI {
 
         Dashboard form = new Dashboard();
         form.setVisible(true);
+        
         
         
     }
