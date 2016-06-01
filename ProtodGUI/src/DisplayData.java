@@ -18,22 +18,23 @@ public class DisplayData {
         for(int i =0;i<cpuSet.size();i++){
             longCpuSet.add(cpuSet.get(i).longValue());
         }
-        xyPlot graph = new xyPlot("Resource Usage", "CPU Load", "Utiliztaion (%)", longCpuSet , timeSet);
+        timePlot graph = new timePlot("Resource Usage", "CPU Load", "Utiliztaion (%)", longCpuSet , timeSet);
         //graph.showChart();
     }
 
     public static void ramPlot(ArrayList<Long> ramSet, ArrayList<Long> timeSet){
-        xyPlot graph = new xyPlot("Resource Usage", "RAM Load", "RAM (Bytes)", ramSet , timeSet);
+        //xyPlot graph = new xyPlot("Resource Usage", "RAM Load", "RAM (Bytes)", ramSet , timeSet);
+        timePlot graph = new timePlot("Resource Usage", "RAM Load", "RAM (Bytes)", ramSet , timeSet);
         //graph.showChart();
     }
     
     public static void dataPlot(ArrayList<Long> dataSet, ArrayList<Long> timeSet){
-        xyPlot graph = new xyPlot("Resource Usage", "Data Transfer", "Data IO (Bytes)", dataSet , timeSet);
+        timePlot graph = new timePlot("Resource Usage", "Data Transfer", "Data IO (Bytes)", dataSet , timeSet);
         //graph.showChart();
     }
     
     public static void networkPlot(ArrayList<Long> networkSet, ArrayList<Long> timeSet){
-        xyPlot graph = new xyPlot("Resource Usage", "Network Transfer", "Data IO (Octets)", networkSet , timeSet);
+        timePlot graph = new timePlot("Resource Usage", "Network Transfer", "Data IO (Octets)", networkSet , timeSet);
         //graph.showChart();
     }    
 }

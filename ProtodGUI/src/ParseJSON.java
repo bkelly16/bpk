@@ -1,8 +1,10 @@
 
+import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Iterator;
+import javax.swing.JFileChooser;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
@@ -19,6 +21,8 @@ import org.json.simple.parser.ParseException;
  * @author Brett
  */
 public class ParseJSON {
+
+
     public static void readJSON(String file1, DataSet set1) throws IOException, ParseException{
         //System.out.println("test");
         
@@ -26,6 +30,7 @@ public class ParseJSON {
         //Craete Parser Object
 
         //Read JSON in Object
+        
         JSONParser parser = new JSONParser();
         Object raw = parser.parse(new FileReader(file1));
         //Get Log Object ("log", [header, threashold, values]
@@ -82,8 +87,7 @@ public class ParseJSON {
             printJSONArray(valueArray);
             JSONObject valueObject = (JSONObject) valueArray.get(0); // grab first entry in Array
             printJSONObject(valueObject);
-            
-            
+            Class test = valueArray.getClass();
             set1.timeStamp.add((long) valueObject.get("t"));
             set1.cpuLoad.add((double) valueObject.get("c"));
             set1.memLoad.add((long) valueObject.get("r"));
@@ -94,10 +98,17 @@ public class ParseJSON {
             //set1.memLoad[n] = (long) valueObject.get("r");
             //set1.dataBus[n] =  (long) valueObject.get("d");
             //set1.networkBus[n] = (long) valueObject.get("n");
-        }
-        
-        
-    }  
+        }   
+    }
+
+    
+    public static void browseFile(JFileChooser file, DataSet set) {                                     
+
+        File file1 = file.getSelectedFile();
+        String test = file1.getAbsolutePath();
+        //System.out.println(test);
+        //set.filePath = file1.getAbsolutePath();
+    }    
         
     public static void printJSONArray(JSONArray ja){
         Iterator itr = ja.iterator();

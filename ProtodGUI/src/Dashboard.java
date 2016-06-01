@@ -1,7 +1,10 @@
 
+import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.JFileChooser;
 import org.json.simple.parser.ParseException;
 /**
  *
@@ -9,6 +12,7 @@ import org.json.simple.parser.ParseException;
  */
 public class Dashboard extends javax.swing.JFrame {
     
+
     DataSet set1 = new DataSet();
     
  
@@ -22,6 +26,7 @@ public class Dashboard extends javax.swing.JFrame {
 
         jPanel1 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
+        fileChooser = new javax.swing.JFileChooser();
         importData = new javax.swing.JButton();
         cpuChart = new javax.swing.JButton();
         ramChart = new javax.swing.JButton();
@@ -208,13 +213,21 @@ public class Dashboard extends javax.swing.JFrame {
        
     private void importDataActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_importDataActionPerformed
         try {
-            
+            int returnVal = fileChooser.showOpenDialog(this);
+            if (returnVal == JFileChooser.APPROVE_OPTION) {
+                File file = fileChooser.getSelectedFile();
+                set1.filePath = file.getAbsolutePath();
+            } else {
+                System.out.println("File access cancelled by user.");
+            }
             ParseJSON.readJSON(set1.filePath, set1);
             dateDisplay.setText(String.valueOf(set1.dateStamp));
             idDisplay.setText(String.valueOf(set1.machineID));
             cpuDisplay.setText(String.valueOf(set1.totalCPU));
-            ramDisplay.setText(String.valueOf((set1.totalRAM)/(1000)));
-        } catch (IOException | ParseException ex) {
+            ramDisplay.setText(String.valueOf((set1.totalRAM) / (1000)));
+        } catch (IOException ex) {
+            Logger.getLogger(Dashboard.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (ParseException ex) {
             Logger.getLogger(Dashboard.class.getName()).log(Level.SEVERE, null, ex);
         }
     }//GEN-LAST:event_importDataActionPerformed
@@ -249,6 +262,7 @@ public class Dashboard extends javax.swing.JFrame {
     private javax.swing.JTextPane dateDisplay;
     private javax.swing.JLabel dateLabel;
     private javax.swing.JLabel dateLabel1;
+    private javax.swing.JFileChooser fileChooser;
     private javax.swing.JTextPane idDisplay;
     private javax.swing.JLabel idLabel;
     private javax.swing.JLabel idLabel1;
