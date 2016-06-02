@@ -46,6 +46,7 @@ public class Dashboard extends javax.swing.JFrame {
         cpuDisplay = new javax.swing.JTextPane();
         jScrollPane9 = new javax.swing.JScrollPane();
         ramDisplay = new javax.swing.JTextPane();
+        importData2 = new javax.swing.JButton();
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -118,6 +119,13 @@ public class Dashboard extends javax.swing.JFrame {
 
         jScrollPane9.setViewportView(ramDisplay);
 
+        importData2.setText("Import2");
+        importData2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                importData2ActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -157,17 +165,19 @@ public class Dashboard extends javax.swing.JFrame {
                                         .addComponent(dateLabel)
                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                         .addComponent(jScrollPane6, javax.swing.GroupLayout.PREFERRED_SIZE, 214, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                                .addGap(0, 0, Short.MAX_VALUE)))
-                        .addContainerGap(34, Short.MAX_VALUE))
+                                .addGap(0, 1, Short.MAX_VALUE)))
+                        .addContainerGap(33, Short.MAX_VALUE))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                                .addComponent(importData, javax.swing.GroupLayout.PREFERRED_SIZE, 145, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(106, 106, 106))
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                                .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 198, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addContainerGap())))))
+                            .addComponent(importData2, javax.swing.GroupLayout.PREFERRED_SIZE, 145, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                                    .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 198, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addContainerGap())
+                                .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                                    .addComponent(importData, javax.swing.GroupLayout.PREFERRED_SIZE, 145, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addGap(106, 106, 106)))))))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -200,7 +210,9 @@ public class Dashboard extends javax.swing.JFrame {
                     .addComponent(dataChart))
                 .addGap(18, 18, 18)
                 .addComponent(importData)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(importData2)
+                .addContainerGap())
             .addGroup(layout.createSequentialGroup()
                 .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 421, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(0, 0, Short.MAX_VALUE))
@@ -248,6 +260,27 @@ public class Dashboard extends javax.swing.JFrame {
     private void networkChartActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_networkChartActionPerformed
         DisplayData.networkPlot(set1.networkBus, set1.timeStamp);
     }//GEN-LAST:event_networkChartActionPerformed
+
+    private void importData2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_importData2ActionPerformed
+        try {
+            int returnVal = fileChooser.showOpenDialog(this);
+            if (returnVal == JFileChooser.APPROVE_OPTION) {
+                File file = fileChooser.getSelectedFile();
+                set1.filePath = file.getAbsolutePath();
+            } else {
+                System.out.println("File access cancelled by user.");
+            }
+            Log.importLog(set1.filePath, set1);
+            dateDisplay.setText(String.valueOf(set1.dateStamp));
+            idDisplay.setText(String.valueOf(set1.machineID));
+            cpuDisplay.setText(String.valueOf(set1.totalCPU));
+            ramDisplay.setText(String.valueOf((set1.totalRAM) / (1000)));
+        } catch (IOException ex) {
+            Logger.getLogger(Dashboard.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (ParseException ex) {
+            Logger.getLogger(Dashboard.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_importData2ActionPerformed
    
        /**
      * @param args the command line arguments
@@ -267,6 +300,7 @@ public class Dashboard extends javax.swing.JFrame {
     private javax.swing.JLabel idLabel;
     private javax.swing.JLabel idLabel1;
     private javax.swing.JButton importData;
+    private javax.swing.JButton importData2;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;

@@ -1,9 +1,4 @@
-import java.awt.Color;
-import java.awt.GradientPaint;
-import java.awt.List;
-import java.awt.Paint;
 import java.util.ArrayList;
-import java.util.Date;
 import javax.swing.JFrame;
 import org.jfree.chart.ChartPanel; 
 import org.jfree.chart.JFreeChart; 
@@ -11,13 +6,12 @@ import org.jfree.data.xy.XYDataset;
 import org.jfree.data.xy.XYSeries; 
 import org.jfree.ui.RefineryUtilities; 
 import org.jfree.chart.ChartFactory; 
-import org.jfree.chart.plot.PlotOrientation; 
 import org.jfree.data.xy.XYSeriesCollection; 
 
 public class timePlot extends JFrame 
 {
     public timePlot( String applicationTitle, String chartTitle, String yAxisLabel, ArrayList<Long> set, ArrayList<Long> timeSet) 
-   {
+    {
       super(applicationTitle);
       JFreeChart timelineChart = ChartFactory.createTimeSeriesChart(
                chartTitle ,
@@ -35,7 +29,7 @@ public class timePlot extends JFrame
       chartPanel.setMouseZoomable( true , false );
       chartPanel.setPreferredSize( new java.awt.Dimension( 560 , 367 ) );
       setContentPane( chartPanel );
-      showChart();
+      //showChart();
       
       //final XYPlot plot = xylineChart.getXYPlot( );
       //XYLineAndShapeRenderer renderer = new XYLineAndShapeRenderer( );
@@ -43,10 +37,10 @@ public class timePlot extends JFrame
       //renderer.setSeriesStroke( 0 , new BasicStroke( 4.0f ) );
       //plot.setRenderer( renderer ); 
 
-   }
+    }
 
     private XYDataset createDataset(String title, ArrayList<Long> set, ArrayList<Long> timeSet)
-   {
+    {
       XYSeries series = new XYSeries(title);
       for(int i = 0;i<timeSet.size();i++){
           series.add((timeSet.get(i)*1), set.get(i)); 
@@ -55,9 +49,10 @@ public class timePlot extends JFrame
       dataset.addSeries( series );
      
       return dataset;
-   }
+    }
 
-    private void showChart() {
+    public void showChart()
+    {
         pack();
         RefineryUtilities.centerFrameOnScreen(this);
         setVisible(true);

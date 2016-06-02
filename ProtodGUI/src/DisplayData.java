@@ -19,22 +19,22 @@ public class DisplayData {
             longCpuSet.add(cpuSet.get(i).longValue());
         }
         timePlot graph = new timePlot("Resource Usage", "CPU Load", "Utiliztaion (%)", longCpuSet , timeSet);
-        //graph.showChart();
+        graph.showChart();
     }
 
     public static void ramPlot(ArrayList<Long> ramSet, ArrayList<Long> timeSet){
         //xyPlot graph = new xyPlot("Resource Usage", "RAM Load", "RAM (Bytes)", ramSet , timeSet);
         timePlot graph = new timePlot("Resource Usage", "RAM Load", "RAM (Bytes)", ramSet , timeSet);
-        //graph.showChart();
+        graph.showChart();
     }
     
     public static void dataPlot(ArrayList<Long> dataSet, ArrayList<Long> timeSet){
         timePlot graph = new timePlot("Resource Usage", "Data Transfer", "Data IO (Bytes)", dataSet , timeSet);
-        //graph.showChart();
+        graph.showChart();
     }
     
     public static void networkPlot(ArrayList<Long> networkSet, ArrayList<Long> timeSet){
         timePlot graph = new timePlot("Resource Usage", "Network Transfer", "Data IO (Octets)", networkSet , timeSet);
-        //graph.showChart();
+        graph.showChart();
     }    
 }

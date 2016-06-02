@@ -34,36 +34,6 @@ public class DataSet {
     public ArrayList<Long> dataBus = new ArrayList<>(maxSamples);
     public ArrayList<Long> networkBus = new ArrayList<>(maxSamples);
     
-    
-    public void initializeSet(){
-        for (int i = 1; i < maxSamples; i++) {
-        timeStamp.add(new Long(0));
-        cpuLoad.add(new Double(0));
-        memLoad.add(new Long(0));
-        dataBus.add(new Long(0));
-        networkBus.add(new Long(0));
-        
-        //cpuLoad[i] = 0;
-        //memLoad[i] = 0;
-        //dataBus[i] = 0;
-        //networkBus[i] = 0;
-        }        
-    }
-    
-    
- 
-   
-    
-    private int randInt(int min, int max) {
-        Random rand = new Random();
-        int randomNum = rand.nextInt((max - min) + 1) + min;
-        return randomNum;
-    }
-
-    public void createRandomSet() {
-
-    }
-
     public void debugSet() {
         for (int i =0 ; i<timeStamp.size();i++){
             System.out.println(Long.toString(timeStamp.get(i)));
@@ -75,8 +45,6 @@ public class DataSet {
         }
 
     }
-    
-
 
 }
 
