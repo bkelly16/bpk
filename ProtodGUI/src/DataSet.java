@@ -8,7 +8,7 @@ public class DataSet {
     public String filePath = "F:\\Work\\Log Files\\daemon.properJSON.plf"; 
     // Headers
     long dateStamp = 0;
-    String machineID = "This Is The Default Meassage";
+    String machineID = "Null";
     double totalCPU = 0;
     //totalCPU is 100.0 * the number of CPUs. If hyperthreading is present then the value is 100.0 * the number of hyperthreads
     long totalRAM = 0;

@@ -43,7 +43,7 @@ public class timePlot extends JFrame
     {
       XYSeries series = new XYSeries(title);
       for(int i = 0;i<timeSet.size();i++){
-          series.add((timeSet.get(i)*1), set.get(i)); 
+          series.add((timeSet.get(i)), set.get(i)); 
       }
       XYSeriesCollection dataset = new XYSeriesCollection( );          
       dataset.addSeries( series );

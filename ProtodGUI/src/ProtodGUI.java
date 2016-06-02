@@ -40,6 +40,7 @@ public class ProtodGUI {
         //</editor-fold>
 
         Dashboard form = new Dashboard();
+        form.updateHeaderDisplay();
         form.setVisible(true);
         
         

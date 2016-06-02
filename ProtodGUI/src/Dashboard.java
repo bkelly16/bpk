@@ -14,6 +14,7 @@ public class Dashboard extends javax.swing.JFrame {
     
 
     DataSet set1 = new DataSet();
+
     
  
     public Dashboard() {
@@ -156,17 +157,17 @@ public class Dashboard extends javax.swing.JFrame {
                                             .addComponent(ramChart, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                             .addComponent(networkChart)))
                                     .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
-                                        .addGap(47, 47, 47)
+                                        .addGap(61, 61, 61)
                                         .addComponent(idLabel1)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                         .addComponent(jScrollPane9, javax.swing.GroupLayout.PREFERRED_SIZE, 214, javax.swing.GroupLayout.PREFERRED_SIZE))
                                     .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
-                                        .addGap(92, 92, 92)
+                                        .addGap(106, 106, 106)
                                         .addComponent(dateLabel)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                         .addComponent(jScrollPane6, javax.swing.GroupLayout.PREFERRED_SIZE, 214, javax.swing.GroupLayout.PREFERRED_SIZE)))
                                 .addGap(0, 0, Short.MAX_VALUE)))
-                        .addGap(28, 28, 28))
+                        .addGap(20, 20, 20))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -280,7 +281,7 @@ public class Dashboard extends javax.swing.JFrame {
        /**
      * @param args the command line arguments
      */
-    private void updateHeaderDisplay(){
+    public void updateHeaderDisplay(){
         dateDisplay.setText(String.valueOf(set1.dateStamp));
         idDisplay.setText(String.valueOf(set1.machineID));
         cpuDisplay.setText(String.valueOf(set1.totalCPU));
