@@ -46,7 +46,7 @@ public class Dashboard extends javax.swing.JFrame {
         cpuDisplay = new javax.swing.JTextPane();
         jScrollPane9 = new javax.swing.JScrollPane();
         ramDisplay = new javax.swing.JTextPane();
-        importData2 = new javax.swing.JButton();
+        clearData = new javax.swing.JButton();
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -119,10 +119,10 @@ public class Dashboard extends javax.swing.JFrame {
 
         jScrollPane9.setViewportView(ramDisplay);
 
-        importData2.setText("Import2");
-        importData2.addActionListener(new java.awt.event.ActionListener() {
+        clearData.setText("Clear Data");
+        clearData.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                importData2ActionPerformed(evt);
+                clearDataActionPerformed(evt);
             }
         });
 
@@ -136,7 +136,7 @@ public class Dashboard extends javax.swing.JFrame {
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                             .addGroup(layout.createSequentialGroup()
-                                .addGap(69, 69, 69)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                                     .addComponent(dateLabel1)
                                     .addComponent(idLabel))
@@ -158,19 +158,19 @@ public class Dashboard extends javax.swing.JFrame {
                                     .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
                                         .addGap(47, 47, 47)
                                         .addComponent(idLabel1)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                                         .addComponent(jScrollPane9, javax.swing.GroupLayout.PREFERRED_SIZE, 214, javax.swing.GroupLayout.PREFERRED_SIZE))
                                     .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
                                         .addGap(92, 92, 92)
                                         .addComponent(dateLabel)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                                         .addComponent(jScrollPane6, javax.swing.GroupLayout.PREFERRED_SIZE, 214, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                                .addGap(0, 1, Short.MAX_VALUE)))
-                        .addContainerGap(33, Short.MAX_VALUE))
+                                .addGap(0, 0, Short.MAX_VALUE)))
+                        .addGap(28, 28, 28))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(importData2, javax.swing.GroupLayout.PREFERRED_SIZE, 145, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(clearData, javax.swing.GroupLayout.PREFERRED_SIZE, 145, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                 .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                                     .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 198, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -211,7 +211,7 @@ public class Dashboard extends javax.swing.JFrame {
                 .addGap(18, 18, 18)
                 .addComponent(importData)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(importData2)
+                .addComponent(clearData)
                 .addContainerGap())
             .addGroup(layout.createSequentialGroup()
                 .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 421, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -232,11 +232,9 @@ public class Dashboard extends javax.swing.JFrame {
             } else {
                 System.out.println("File access cancelled by user.");
             }
-            ParseJSON.readJSON(set1.filePath, set1);
-            dateDisplay.setText(String.valueOf(set1.dateStamp));
-            idDisplay.setText(String.valueOf(set1.machineID));
-            cpuDisplay.setText(String.valueOf(set1.totalCPU));
-            ramDisplay.setText(String.valueOf((set1.totalRAM) / (1000)));
+            Log.importLog(set1.filePath, set1);
+            updateHeaderDisplay();
+            
         } catch (IOException ex) {
             Logger.getLogger(Dashboard.class.getName()).log(Level.SEVERE, null, ex);
         } catch (ParseException ex) {
@@ -261,34 +259,37 @@ public class Dashboard extends javax.swing.JFrame {
         DisplayData.networkPlot(set1.networkBus, set1.timeStamp);
     }//GEN-LAST:event_networkChartActionPerformed
 
-    private void importData2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_importData2ActionPerformed
-        try {
-            int returnVal = fileChooser.showOpenDialog(this);
-            if (returnVal == JFileChooser.APPROVE_OPTION) {
-                File file = fileChooser.getSelectedFile();
-                set1.filePath = file.getAbsolutePath();
-            } else {
-                System.out.println("File access cancelled by user.");
-            }
-            Log.importLog(set1.filePath, set1);
-            dateDisplay.setText(String.valueOf(set1.dateStamp));
-            idDisplay.setText(String.valueOf(set1.machineID));
-            cpuDisplay.setText(String.valueOf(set1.totalCPU));
-            ramDisplay.setText(String.valueOf((set1.totalRAM) / (1000)));
-        } catch (IOException ex) {
-            Logger.getLogger(Dashboard.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (ParseException ex) {
-            Logger.getLogger(Dashboard.class.getName()).log(Level.SEVERE, null, ex);
-        }
-    }//GEN-LAST:event_importData2ActionPerformed
+    private void clearDataActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_clearDataActionPerformed
+    set1.dateStamp = 0;
+    set1.machineID = "This Is The Default Meassage";
+    set1.totalCPU = 0;
+    set1.totalRAM = 0;
+    set1.iniTimeStamp = 0;
+    set1.thresholdcpu = 0;
+    set1.thresholdram = 0;
+    set1.thresholdDataBus = 0;
+    set1.thresholdNetwork = 0;
+    set1.cpuLoad.clear();
+    set1.memLoad.clear();
+    set1.dataBus.clear();
+    set1.networkBus.clear();
+    set1.timeStamp.clear();
+    updateHeaderDisplay();
+    }//GEN-LAST:event_clearDataActionPerformed
    
        /**
      * @param args the command line arguments
      */
-
+    private void updateHeaderDisplay(){
+        dateDisplay.setText(String.valueOf(set1.dateStamp));
+        idDisplay.setText(String.valueOf(set1.machineID));
+        cpuDisplay.setText(String.valueOf(set1.totalCPU));
+        ramDisplay.setText(String.valueOf((set1.totalRAM) / (1000)));
+    }
 
  
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton clearData;
     private javax.swing.JButton cpuChart;
     private javax.swing.JTextPane cpuDisplay;
     private javax.swing.JButton dataChart;
@@ -300,7 +301,6 @@ public class Dashboard extends javax.swing.JFrame {
     private javax.swing.JLabel idLabel;
     private javax.swing.JLabel idLabel1;
     private javax.swing.JButton importData;
-    private javax.swing.JButton importData2;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;

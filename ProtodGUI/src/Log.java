@@ -13,6 +13,7 @@ public class Log {
     static JSONObject logObject = new JSONObject();
     static JSONArray logArray = new JSONArray();
     
+    
     public static void  importLog(String file, DataSet set) throws IOException, ParseException
     {
         importFile(file); // imports log as an JSON Object and its corresponing Value of Arrays
