@@ -229,16 +229,31 @@ public class Dashboard extends javax.swing.JFrame {
     }//GEN-LAST:event_importDataActionPerformed
 
     private void cpuChartActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cpuChartActionPerformed
-        //plot the chart (cpuLoad and time) 
-        //DisplayData.cpuPlot(set1.cpuLoad, set1.timeStamp);   
+        DisplayData.cpuPlot(set1.cpu.uCPU, set1.timeStamp.timeStamp, "User Load %");
+        DisplayData.cpuPlot(set1.cpu.sysCPU, set1.timeStamp.timeStamp, "System Load %");
     }//GEN-LAST:event_cpuChartActionPerformed
 
     private void ramChartActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ramChartActionPerformed
-        //DisplayData.ramPlot(set1.memLoad, set1.timeStamp);
+        DisplayData.ramPlot(set1.ram.usedMem, set1.timeStamp.timeStamp, "Used Memory");
+        DisplayData.ramPlot(set1.ram.sharedMem, set1.timeStamp.timeStamp, "Shared Memory");
+        DisplayData.ramPlot(set1.ram.buffMem, set1.timeStamp.timeStamp, "Buffer Space");
+        DisplayData.ramPlot(set1.ram.cacheMem, set1.timeStamp.timeStamp, "Cache");
+        DisplayData.ramPlot(set1.ram.totalSwapMem, set1.timeStamp.timeStamp, "Total Swap Space");
+        DisplayData.ramPlot(set1.ram.usedSwapMem, set1.timeStamp.timeStamp, "Used Swap Space");
     }//GEN-LAST:event_ramChartActionPerformed
 
     private void dataChartActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_dataChartActionPerformed
-        //DisplayData.dataPlot(set1.dataBus, set1.timeStamp);
+        DisplayData.dataPlot(set1.dev.rds, set1.timeStamp.timeStamp, "Sectors Read Succesfully");
+        DisplayData.dataPlot(set1.dev.wrs, set1.timeStamp.timeStamp, "Sectors Written Succesfully");
+        DisplayData.dataPlot(set1.dev.rdi, set1.timeStamp.timeStamp, "Read IOs Completed");
+        DisplayData.dataPlot(set1.dev.rdm, set1.timeStamp.timeStamp, "Number of Reads Merged");
+        DisplayData.dataPlot(set1.dev.rdt, set1.timeStamp.timeStamp, "Total Milliseconds Spent By Reads");
+        DisplayData.dataPlot(set1.dev.wri, set1.timeStamp.timeStamp, "Write IOS Completed");
+        DisplayData.dataPlot(set1.dev.wrm, set1.timeStamp.timeStamp, "Number of Writes Merged");
+        DisplayData.dataPlot(set1.dev.wrt, set1.timeStamp.timeStamp, "Total Milliseconds Spent By Writes");
+        DisplayData.dataPlot(set1.dev.iop, set1.timeStamp.timeStamp, "Total # of IOs in Progress");
+        DisplayData.dataPlot(set1.dev.tot, set1.timeStamp.timeStamp, "Number of Milliseoncd spent on IO");
+        DisplayData.dataPlot(set1.dev.rqt, set1.timeStamp.timeStamp, "Weighted # of Milliseconds Spent oo IO");
     }//GEN-LAST:event_dataChartActionPerformed
 
     private void networkChartActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_networkChartActionPerformed

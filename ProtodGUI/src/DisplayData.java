@@ -13,23 +13,23 @@ import java.util.ArrayList;
  */
 public class DisplayData {
     
-    public static void cpuPlot(ArrayList<Double> cpuSet, ArrayList<Long> timeSet){
+    public static void cpuPlot(ArrayList<Double> cpuSet, ArrayList<Long> timeSet, String title){
         ArrayList<Long> longCpuSet = new ArrayList<>(cpuSet.size());
         for(int i =0;i<cpuSet.size();i++){
             longCpuSet.add(cpuSet.get(i).longValue());
         }
-        timePlot graph = new timePlot("Resource Usage", "CPU Load", "Utiliztaion (%)", longCpuSet , timeSet);
+        timePlot graph = new timePlot("Resource Usage", title, "Utiliztaion (%)", longCpuSet , timeSet);
         graph.showChart();
     }
 
-    public static void ramPlot(ArrayList<Long> ramSet, ArrayList<Long> timeSet){
+    public static void ramPlot(ArrayList<Long> ramSet, ArrayList<Long> timeSet, String title){
         //xyPlot graph = new xyPlot("Resource Usage", "RAM Load", "RAM (Bytes)", ramSet , timeSet);
-        timePlot graph = new timePlot("Resource Usage", "RAM Load", "RAM (kiloBytes)", ramSet , timeSet);
+        timePlot graph = new timePlot("Resource Usage", title, "RAM (kiloBytes)", ramSet , timeSet);
         graph.showChart();
     }
     
-    public static void dataPlot(ArrayList<Long> dataSet, ArrayList<Long> timeSet){
-        timePlot graph = new timePlot("Resource Usage", "Data Transfer", "Data IO (Bytes)", dataSet , timeSet);
+    public static void dataPlot(ArrayList<Long> dataSet, ArrayList<Long> timeSet, String title){
+        timePlot graph = new timePlot("Resource Usage", title, "Data IO (Bytes)", dataSet , timeSet);
         graph.showChart();
     }
     

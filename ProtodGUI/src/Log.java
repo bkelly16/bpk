@@ -108,17 +108,10 @@ public class Log {
     private static void getCpuLoad(DataSet dataSet, JSONObject obj, int cpuCount) {
         JSONArray cpuArray = (JSONArray) obj.get("c");
         JSONObject cpuValues = (JSONObject) cpuArray.get(0);
-
-        //printJSONObject(cpuValues);
-        //System.out.println(cpuCount);
+        
         for (int i = 0; i < cpuCount; i++) {//Dynamically fill cpuS List based on cpu count
             dataSet.cpu.uCPU.add(setCpuLoad(cpuValues, "u" + i));
-            //System.out.println(dataSet.cpu.uCPU.get(i));
-            //dataSet.userCPUs.add(dataSet.cpu.uCPU.get(i));
-
             dataSet.cpu.sysCPU.add(setCpuLoad(cpuValues, "s" + i));
-            //dataSet.sysCPUs.add(dataSet.cpu.sysCPU.get(i));
-
         }
         //printUserCPU(dataSet);
         //printSysCPU(dataSet);
@@ -164,27 +157,16 @@ public class Log {
         //printDevName(dataSet);
         for (int i = 0; i < devCount; i++) {
             dataSet.dev.rds.add(setDevStat(devObject, dataSet.devName.devNames[i] + "_rds"));
-
             dataSet.dev.wrs.add(setDevStat(devObject, dataSet.devName.devNames[i] + "_wrs"));
-
             dataSet.dev.rdi.add(setDevStat(devObject, dataSet.devName.devNames[i] + "_rdi"));
-
             dataSet.dev.rdm.add(setDevStat(devObject, dataSet.devName.devNames[i] + "_rdm"));
-
             dataSet.dev.rdt.add(setDevStat(devObject, dataSet.devName.devNames[i] + "_rdt"));
-
             dataSet.dev.wri.add(setDevStat(devObject, dataSet.devName.devNames[i] + "_wri"));
-
             dataSet.dev.wrm.add(setDevStat(devObject, dataSet.devName.devNames[i] + "_wrm"));
-
             dataSet.dev.wrt.add(setDevStat(devObject, dataSet.devName.devNames[i] + "_wrt"));
-
             dataSet.dev.iop.add(setDevStat(devObject, dataSet.devName.devNames[i] + "_iop"));
-
             dataSet.dev.tot.add(setDevStat(devObject, dataSet.devName.devNames[i] + "_tot"));
-
             dataSet.dev.rqt.add(setDevStat(devObject, dataSet.devName.devNames[i] + "_rqt"));
-
         }
         printDiskStat(dataSet);
 
