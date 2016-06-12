@@ -24,7 +24,7 @@ public class DisplayData {
 
     public static void ramPlot(ArrayList<Long> ramSet, ArrayList<Long> timeSet){
         //xyPlot graph = new xyPlot("Resource Usage", "RAM Load", "RAM (Bytes)", ramSet , timeSet);
-        timePlot graph = new timePlot("Resource Usage", "RAM Load", "RAM (Bytes)", ramSet , timeSet);
+        timePlot graph = new timePlot("Resource Usage", "RAM Load", "RAM (kiloBytes)", ramSet , timeSet);
         graph.showChart();
     }
     
@@ -34,7 +34,7 @@ public class DisplayData {
     }
     
     public static void networkPlot(ArrayList<Long> networkSet, ArrayList<Long> timeSet){
-        timePlot graph = new timePlot("Resource Usage", "Network Transfer", "Data IO (Octets)", networkSet , timeSet);
+        timePlot graph = new timePlot("Resource Usage", "Network Transfer", "Data IO (Bytes)", networkSet , timeSet);
         graph.showChart();
     }    
 }
