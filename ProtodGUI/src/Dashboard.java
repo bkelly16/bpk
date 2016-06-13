@@ -12,7 +12,7 @@ import org.json.simple.parser.ParseException;
  */
 public class Dashboard extends javax.swing.JFrame {
 
-    DataSet set1 = new DataSet();
+    DataSet dataSet = new DataSet();
 
     public Dashboard() {
         initComponents();
@@ -216,11 +216,11 @@ public class Dashboard extends javax.swing.JFrame {
             int returnVal = fileChooser.showOpenDialog(this);
             if (returnVal == JFileChooser.APPROVE_OPTION) {
                 File file = fileChooser.getSelectedFile();
-                set1.filePath = file.getAbsolutePath();
+                dataSet.filePath = file.getAbsolutePath();
             } else {
                 System.out.println("File access cancelled by user.");
             }
-            Log.importLog(set1);
+            Log.importLog(dataSet);
             updateHeaderDisplay();
 
         } catch (IOException | ParseException ex) {
@@ -229,31 +229,31 @@ public class Dashboard extends javax.swing.JFrame {
     }//GEN-LAST:event_importDataActionPerformed
 
     private void cpuChartActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cpuChartActionPerformed
-        DisplayData.cpuPlot(set1.cpu.uCPU, set1.timeStamp.timeStamp, "User Load %");
-        DisplayData.cpuPlot(set1.cpu.sysCPU, set1.timeStamp.timeStamp, "System Load %");
+        DisplayData.cpuPlot(dataSet.cpu.uCPU, dataSet.timeStamp.timeStamp, "User Load %");
+        DisplayData.cpuPlot(dataSet.cpu.sCPU, dataSet.timeStamp.timeStamp, "System Load %");
     }//GEN-LAST:event_cpuChartActionPerformed
 
     private void ramChartActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ramChartActionPerformed
-        DisplayData.ramPlot(set1.ram.usedMem, set1.timeStamp.timeStamp, "Used Memory");
-        DisplayData.ramPlot(set1.ram.sharedMem, set1.timeStamp.timeStamp, "Shared Memory");
-        DisplayData.ramPlot(set1.ram.buffMem, set1.timeStamp.timeStamp, "Buffer Space");
-        DisplayData.ramPlot(set1.ram.cacheMem, set1.timeStamp.timeStamp, "Cache");
-        DisplayData.ramPlot(set1.ram.totalSwapMem, set1.timeStamp.timeStamp, "Total Swap Space");
-        DisplayData.ramPlot(set1.ram.usedSwapMem, set1.timeStamp.timeStamp, "Used Swap Space");
+        DisplayData.ramPlot(dataSet.ram.usedMem, dataSet.timeStamp.timeStamp, "Used Memory");
+        DisplayData.ramPlot(dataSet.ram.sharedMem, dataSet.timeStamp.timeStamp, "Shared Memory");
+        DisplayData.ramPlot(dataSet.ram.buffMem, dataSet.timeStamp.timeStamp, "Buffer Space");
+        DisplayData.ramPlot(dataSet.ram.cacheMem, dataSet.timeStamp.timeStamp, "Cache");
+        DisplayData.ramPlot(dataSet.ram.totalSwapMem, dataSet.timeStamp.timeStamp, "Total Swap Space");
+        DisplayData.ramPlot(dataSet.ram.usedSwapMem, dataSet.timeStamp.timeStamp, "Used Swap Space");
     }//GEN-LAST:event_ramChartActionPerformed
 
     private void dataChartActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_dataChartActionPerformed
-        DisplayData.dataPlot(set1.dev.rds, set1.timeStamp.timeStamp, "Sectors Read Succesfully");
-        DisplayData.dataPlot(set1.dev.wrs, set1.timeStamp.timeStamp, "Sectors Written Succesfully");
-        DisplayData.dataPlot(set1.dev.rdi, set1.timeStamp.timeStamp, "Read IOs Completed");
-        DisplayData.dataPlot(set1.dev.rdm, set1.timeStamp.timeStamp, "Number of Reads Merged");
-        DisplayData.dataPlot(set1.dev.rdt, set1.timeStamp.timeStamp, "Total Milliseconds Spent By Reads");
-        DisplayData.dataPlot(set1.dev.wri, set1.timeStamp.timeStamp, "Write IOS Completed");
-        DisplayData.dataPlot(set1.dev.wrm, set1.timeStamp.timeStamp, "Number of Writes Merged");
-        DisplayData.dataPlot(set1.dev.wrt, set1.timeStamp.timeStamp, "Total Milliseconds Spent By Writes");
-        DisplayData.dataPlot(set1.dev.iop, set1.timeStamp.timeStamp, "Total # of IOs in Progress");
-        DisplayData.dataPlot(set1.dev.tot, set1.timeStamp.timeStamp, "Number of Milliseoncd spent on IO");
-        DisplayData.dataPlot(set1.dev.rqt, set1.timeStamp.timeStamp, "Weighted # of Milliseconds Spent oo IO");
+        DisplayData.dataPlot(dataSet.dev.rds, dataSet.timeStamp.timeStamp, "Sectors Read Succesfully");
+        DisplayData.dataPlot(dataSet.dev.wrs, dataSet.timeStamp.timeStamp, "Sectors Written Succesfully");
+        DisplayData.dataPlot(dataSet.dev.rdi, dataSet.timeStamp.timeStamp, "Read IOs Completed");
+        DisplayData.dataPlot(dataSet.dev.rdm, dataSet.timeStamp.timeStamp, "Number of Reads Merged");
+        DisplayData.dataPlot(dataSet.dev.rdt, dataSet.timeStamp.timeStamp, "Total Milliseconds Spent By Reads");
+        DisplayData.dataPlot(dataSet.dev.wri, dataSet.timeStamp.timeStamp, "Write IOS Completed");
+        DisplayData.dataPlot(dataSet.dev.wrm, dataSet.timeStamp.timeStamp, "Number of Writes Merged");
+        DisplayData.dataPlot(dataSet.dev.wrt, dataSet.timeStamp.timeStamp, "Total Milliseconds Spent By Writes");
+        DisplayData.dataPlot(dataSet.dev.iop, dataSet.timeStamp.timeStamp, "Total # of IOs in Progress");
+        DisplayData.dataPlot(dataSet.dev.tot, dataSet.timeStamp.timeStamp, "Number of Milliseoncd spent on IO");
+        DisplayData.dataPlot(dataSet.dev.rqt, dataSet.timeStamp.timeStamp, "Weighted # of Milliseconds Spent oo IO");
     }//GEN-LAST:event_dataChartActionPerformed
 
     private void networkChartActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_networkChartActionPerformed
@@ -261,28 +261,34 @@ public class Dashboard extends javax.swing.JFrame {
     }//GEN-LAST:event_networkChartActionPerformed
 
     private void clearDataActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_clearDataActionPerformed
-//    set1.dateStamp = 0;
-//    set1.machineID = "This Is The Default Meassage";
-//    set1.totalCPU = 0;
-//    set1.totalRAM = 0;
-//    set1.iniTimeStamp = 0;
-//    set1.thresholdcpu = 0;
-//    set1.thresholdram = 0;
-//    set1.thresholdDataBus = 0;
-//    set1.thresholdNetwork = 0;
-//    set1.cpuLoad.clear();
-//    set1.memLoad.clear();
-//    set1.dataBus.clear();
-//    set1.networkBus.clear();
-//    set1.timeStamp.clear();
-//    updateHeaderDisplay();
+    dataSet.header.dateStamp = 0;
+    dataSet.header.machineID = "";
+    dataSet.header.totalCPU = 0;
+    dataSet.header.totalRAM = 0;
+    dataSet.threshold.iniTimeStamp = 0;
+    dataSet.threshold.thresholdcpu = 0;
+    dataSet.threshold.thresholdram = 0;
+    dataSet.threshold.thresholdDataBus = 0;
+    dataSet.threshold.thresholdNetwork = 0;
+    dataSet.cpu.sCPU.clear();
+    dataSet.cpu.uCPU.clear();
+    dataSet.ram.sharedMem.clear();
+    dataSet.ram.buffMem.clear();
+    dataSet.ram.cacheMem.clear();
+    dataSet.ram.usedMem.clear();
+    dataSet.ram.usedSwapMem.clear();
+    
+    //set1.dataBus.clear();
+    //set1.networkBus.clear();
+    dataSet.timeStamp.timeStamp.clear();
+    updateHeaderDisplay();
     }//GEN-LAST:event_clearDataActionPerformed
 
     public void updateHeaderDisplay() {
-        dateDisplay.setText(String.valueOf(set1.header.dateStamp));
-        idDisplay.setText(String.valueOf(set1.header.machineID));
-        cpuDisplay.setText(String.valueOf(set1.header.totalCPU));
-        ramDisplay.setText(String.valueOf((set1.header.totalRAM) / (1000)));
+        dateDisplay.setText(String.valueOf(dataSet.header.dateStamp));
+        idDisplay.setText(String.valueOf(dataSet.header.machineID));
+        cpuDisplay.setText(String.valueOf(dataSet.header.totalCPU));
+        ramDisplay.setText(String.valueOf((dataSet.header.totalRAM) / (1000)));
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

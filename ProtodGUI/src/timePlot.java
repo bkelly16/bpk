@@ -1,4 +1,5 @@
 import java.util.ArrayList;
+import java.util.List;
 import javax.swing.JFrame;
 import org.jfree.chart.ChartPanel; 
 import org.jfree.chart.JFreeChart; 
@@ -10,7 +11,7 @@ import org.jfree.data.xy.XYSeriesCollection;
 
 public class timePlot extends JFrame 
 {
-    public timePlot( String applicationTitle, String chartTitle, String yAxisLabel, ArrayList<Long> set, ArrayList<Long> timeSet) 
+    public timePlot( String applicationTitle, String chartTitle, String yAxisLabel, List<Long> set, List<Long> timeSet) 
     {
       super(applicationTitle);
       JFreeChart timelineChart = ChartFactory.createTimeSeriesChart(
@@ -39,7 +40,7 @@ public class timePlot extends JFrame
 
     }
 
-    private XYDataset createDataset(String title, ArrayList<Long> set, ArrayList<Long> timeSet)
+    private XYDataset createDataset(String title, List<Long> set, List<Long> timeSet)
     {
       XYSeries series = new XYSeries(title);
       for(int i = 0;i<timeSet.size();i++){

@@ -72,18 +72,24 @@ public class Log {
         }
         int cpuCount = getCpuCount(listofMeasurements);
         int devCount = getDevCount(listofMeasurements);
+        //System.out.println(devCount);
+        //System.out.println(cpuCount);
 
         for (int n = 0; n < listofMeasurements.size(); n++) { // Loop through the List of measurements
             JSONArray valueArray = (JSONArray) listofMeasurements.get(n); // create JSONArray out of current line
             JSONObject valueObject = (JSONObject) valueArray.get(0); // grab first entry in Array
-            //printJSONObject(valueObject);
+            
             getTimeStamp(dataSet, valueObject);
-            getCpuLoad(dataSet, valueObject, cpuCount);
             getMemLoad(dataSet, valueObject);
+            
+            getCpuLoad(dataSet, valueObject, cpuCount);
             getDeviceStat(dataSet, valueObject, devCount);
-            //set.dataBus.add((long) valueObject.get("d"));
             //set.networkBus.add((long) valueObject.get("n"));
         }
+        System.out.println(dataSet.dev.iop.size());
+        System.out.println(dataSet.cpu.uCPU.size());
+        System.out.println(dataSet.timeStamp.timeStamp.size());
+
     }
 
     //Measurement Values
@@ -111,7 +117,7 @@ public class Log {
         
         for (int i = 0; i < cpuCount; i++) {//Dynamically fill cpuS List based on cpu count
             dataSet.cpu.uCPU.add(setCpuLoad(cpuValues, "u" + i));
-            dataSet.cpu.sysCPU.add(setCpuLoad(cpuValues, "s" + i));
+            dataSet.cpu.sCPU.add(setCpuLoad(cpuValues, "s" + i));
         }
         //printUserCPU(dataSet);
         //printSysCPU(dataSet);
@@ -168,7 +174,7 @@ public class Log {
             dataSet.dev.tot.add(setDevStat(devObject, dataSet.devName.devNames[i] + "_tot"));
             dataSet.dev.rqt.add(setDevStat(devObject, dataSet.devName.devNames[i] + "_rqt"));
         }
-        printDiskStat(dataSet);
+        //printDiskStat(dataSet);
 
     }
 
@@ -188,9 +194,7 @@ public class Log {
         JSONObject devValues = (JSONObject) devArray.get(0);
 
         int count = (devValues.size() / 11);
-        System.out.println(count);
         return count;
-
     }
 
     //JSON convert
@@ -240,8 +244,8 @@ public class Log {
     }
 
     public static void printSysCPU(DataSet dataSet) {
-        for (int i = 0; i < dataSet.cpu.sysCPU.size(); i++) {
-            System.out.println(dataSet.cpu.sysCPU.get(i));
+        for (int i = 0; i < dataSet.cpu.sCPU.size(); i++) {
+            System.out.println(dataSet.cpu.sCPU.get(i));
         }
     }
 

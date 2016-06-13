@@ -1,5 +1,7 @@
 
+import java.util.List;
 import java.util.ArrayList;
+import org.jfree.chart.block.Arrangement;
 
 public class DataSet {
   
@@ -17,42 +19,42 @@ public class DataSet {
         public long thresholdNetwork = 0;        
     }
     public class TimeStamp {
-        public ArrayList<Long> timeStamp = new ArrayList<>();
+        public List<Long> timeStamp = new ArrayList<>();
     }
     public class CPUValues {
-        public ArrayList<Double> uCPU = new ArrayList<>();
-        public ArrayList<Double> sysCPU = new ArrayList<>();
+        public List<Double> uCPU = new ArrayList<>();
+        public List<Double> sCPU = new ArrayList<>();
     }
     public class RAMValues {
-        public ArrayList<Long> usedMem = new ArrayList<>();
-        public ArrayList<Long> sharedMem = new ArrayList<>();
-        public ArrayList<Long> buffMem = new ArrayList<>();
-        public ArrayList<Long> cacheMem = new ArrayList<>();
-        public ArrayList<Long> totalSwapMem = new ArrayList<>();
-        public ArrayList<Long> usedSwapMem = new ArrayList<>();    
+        public List<Long> usedMem = new ArrayList<>();
+        public List<Long> sharedMem = new ArrayList<>();
+        public List<Long> buffMem = new ArrayList<>();
+        public List<Long> cacheMem = new ArrayList<>();
+        public List<Long> totalSwapMem = new ArrayList<>();
+        public List<Long> usedSwapMem = new ArrayList<>();    
     }
     public class DiskNames{
         public String[] devNames = {"sda", "sdb", "sdc", "sdd", "sde","sdf","sdg","sdh","sdi","sdj","sdk","sdl","sdm","sdn","sdo","sdp","sdq","sdr","sds","sdt","sdu","sdv","sdw","sdx","sdy","sdz","sdaa","sdab","sdac","sdad","sdae","sdaf","sdag","sdah","sdai","sdaj","sdak","sdl","sdam","sdan","sdao","sdap","sdaq","sdar","sdas","sdat","sdau","md126","md127"};   
     }
     public class DiskValues {
-        public ArrayList<Long> rds = new ArrayList<>();
-        public ArrayList<Long> wrs = new ArrayList<>();
-        public ArrayList<Long> rdi = new ArrayList<>();
-        public ArrayList<Long> rdm = new ArrayList<>();
-        public ArrayList<Long> rdt = new ArrayList<>();
-        public ArrayList<Long> wri = new ArrayList<>();
-        public ArrayList<Long> wrm = new ArrayList<>();
-        public ArrayList<Long> wrt = new ArrayList<>();
-        public ArrayList<Long> iop = new ArrayList<>();
-        public ArrayList<Long> tot = new ArrayList<>();
-        public ArrayList<Long> rqt = new ArrayList<>();
+        public List<Long> rds = new ArrayList<>();
+        public List<Long> wrs = new ArrayList<>();
+        public List<Long> rdi = new ArrayList<>();
+        public List<Long> rdm = new ArrayList<>();
+        public List<Long> rdt = new ArrayList<>();
+        public List<Long> wri = new ArrayList<>();
+        public List<Long> wrm = new ArrayList<>();
+        public List<Long> wrt = new ArrayList<>();
+        public List<Long> iop = new ArrayList<>();
+        public List<Long> tot = new ArrayList<>();
+        public List<Long> rqt = new ArrayList<>();
     }
     public class NetworkNames{
         
     }
     public class NetworkValues {
-        public ArrayList<Long> rx = new ArrayList<>();
-        public ArrayList<Long> tx = new ArrayList<>();
+        public List<Long> rx = new ArrayList<>();
+        public List<Long> tx = new ArrayList<>();
     }
 
     
@@ -65,6 +67,7 @@ public class DataSet {
     TimeStamp timeStamp = new TimeStamp();
     
     CPUValues cpu = new CPUValues();
+    //List<CPUValues> cpuCores = new ArrayList<>();
     
     RAMValues ram = new RAMValues();
     
