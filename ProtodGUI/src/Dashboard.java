@@ -221,6 +221,9 @@ public class Dashboard extends javax.swing.JFrame {
                 System.out.println("File access cancelled by user.");
             }
             Log.importLog(dataSet);
+            //Log.printCPUSet(dataSet.cpuCores);
+            //Log.printDiskStat(dataSet.devList);
+            //Log.printNicStats(dataSet.nicList);
             updateHeaderDisplay();
 
         } catch (IOException | ParseException ex) {
@@ -261,27 +264,27 @@ public class Dashboard extends javax.swing.JFrame {
     }//GEN-LAST:event_networkChartActionPerformed
 
     private void clearDataActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_clearDataActionPerformed
-    dataSet.header.dateStamp = 0;
-    dataSet.header.machineID = "";
-    dataSet.header.totalCPU = 0;
-    dataSet.header.totalRAM = 0;
-    dataSet.threshold.iniTimeStamp = 0;
-    dataSet.threshold.thresholdcpu = 0;
-    dataSet.threshold.thresholdram = 0;
-    dataSet.threshold.thresholdDataBus = 0;
-    dataSet.threshold.thresholdNetwork = 0;
-    dataSet.cpu.sCPU.clear();
-    dataSet.cpu.uCPU.clear();
-    dataSet.ram.sharedMem.clear();
-    dataSet.ram.buffMem.clear();
-    dataSet.ram.cacheMem.clear();
-    dataSet.ram.usedMem.clear();
-    dataSet.ram.usedSwapMem.clear();
-    
-    //set1.dataBus.clear();
-    //set1.networkBus.clear();
-    dataSet.timeStamp.timeStamp.clear();
-    updateHeaderDisplay();
+        dataSet.header.dateStamp = 0;
+        dataSet.header.machineID = "";
+        dataSet.header.totalCPU = 0;
+        dataSet.header.totalRAM = 0;
+        dataSet.threshold.iniTimeStamp = 0;
+        dataSet.threshold.thresholdcpu = 0;
+        dataSet.threshold.thresholdram = 0;
+        dataSet.threshold.thresholdDataBus = 0;
+        dataSet.threshold.thresholdNetwork = 0;
+        dataSet.cpu.sCPU.clear();
+        dataSet.cpu.uCPU.clear();
+        dataSet.ram.sharedMem.clear();
+        dataSet.ram.buffMem.clear();
+        dataSet.ram.cacheMem.clear();
+        dataSet.ram.usedMem.clear();
+        dataSet.ram.usedSwapMem.clear();
+
+        //set1.dataBus.clear();
+        //set1.networkBus.clear();
+        dataSet.timeStamp.timeStamp.clear();
+        updateHeaderDisplay();
     }//GEN-LAST:event_clearDataActionPerformed
 
     public void updateHeaderDisplay() {
