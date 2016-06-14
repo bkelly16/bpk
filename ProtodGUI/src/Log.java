@@ -2,15 +2,18 @@
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Set;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
 
 public class Log {
-
+    
     static Object log = new Object();
     static JSONObject logObject = new JSONObject();
     static JSONArray logArray = new JSONArray();
@@ -23,7 +26,7 @@ public class Log {
         getThresholdValues(dataSet);
         getMeasurementValues(dataSet);
     }
-
+    
     private static void importFile(String file) throws IOException, ParseException {
         JSONParser parser = new JSONParser();
         log = parser.parse(new FileReader(file));
@@ -35,7 +38,7 @@ public class Log {
     public static void getHeaderValues(DataSet dataSet) {
         JSONObject header = ArrayToObject(0, logArray);
         JSONArray headerArray = ObjectToArray("header", header);
-
+        
         JSONObject headerValues = (JSONObject) headerArray.get(0);
         dataSet.header.dateStamp = (long) headerValues.get("date");
         dataSet.header.machineID = (String) headerValues.get("id");
@@ -45,54 +48,54 @@ public class Log {
         //printJSONObject(header);
         printJSONArray(headerArray);
     }
-
+    
     public static void getThresholdValues(DataSet dataSet) {
         JSONObject threshold = ArrayToObject(1, logArray);
         JSONArray thresholdArray = ObjectToArray("threshold", threshold);
-
+        
         JSONObject thresholdValues = (JSONObject) thresholdArray.get(0);
         dataSet.threshold.iniTimeStamp = (long) thresholdValues.get("timestamp");
         dataSet.threshold.thresholdcpu = (long) thresholdValues.get("thresholdcpu");
         dataSet.threshold.thresholdram = (long) thresholdValues.get("thresholdram");
         dataSet.threshold.thresholdDataBus = (long) thresholdValues.get("thresholddatabus");
         dataSet.threshold.thresholdNetwork = (long) thresholdValues.get("thresholdnetwork");
-
+        
         printJSONArray(thresholdArray);
-
+        
     }
-
+    
     public static void getMeasurementValues(DataSet dataSet) {
         JSONObject values = ArrayToObject(2, logArray);
         JSONArray valuesArray = (JSONArray) values.get("values");
-
+        
         ArrayList<JSONArray> listofMeasurements = new ArrayList<>(values.size());
-
+        
         for (int i = 0; i < valuesArray.size(); i++) { //Loop through valuesArray, get measureObject[i] enter into MeasurementList
             JSONObject measureObject = (JSONObject) valuesArray.get(i);
             JSONArray measureArray = (JSONArray) measureObject.get("m");
             listofMeasurements.add(measureArray);
         }
-        int cpuCount = getCpuCount(listofMeasurements);
-        int devCount = getDevCount(listofMeasurements);
-        int nicCount = getNicCount(listofMeasurements);
-
+        getCpuCount(dataSet, listofMeasurements);
+        getDevNames(dataSet, listofMeasurements);
+        getNICNames(dataSet, listofMeasurements);
+        
         for (int n = 0; n < listofMeasurements.size(); n++) { // Loop through the List of measurements
             JSONArray valueArray = (JSONArray) listofMeasurements.get(n); // create JSONArray out of current line
             JSONObject valueObject = (JSONObject) valueArray.get(0); // grab first entry in Array
 
             getTimeStamp(dataSet, valueObject);
             getMemLoad(dataSet, valueObject);
-
-            getCpuLoad(dataSet, valueObject, cpuCount);
-            getDeviceStat(dataSet, valueObject, devCount);
-            getNetworkLoad(dataSet, valueObject, nicCount);
+            
+            getCpuLoad(dataSet, valueObject, dataSet.cpuCount);
+            getDeviceStat(dataSet, valueObject, dataSet.devCount);
+            getNetworkLoad(dataSet, valueObject, dataSet.nicCount);
         }
-        System.out.println(dataSet.devList.size());
-        System.out.println(dataSet.cpuCores.size());
-        System.out.println(dataSet.nicList.size());
-        System.out.println(dataSet.ram.usedMem.size());
-        System.out.println(dataSet.timeStamp.timeStamp.size());
-        //System.out.println(dataSet.nicList.get(0).tx.size());
+//        System.out.println(dataSet.devList.size());
+//        System.out.println(dataSet.cpuCores.size());
+//        System.out.println(dataSet.nicList.size());
+//        System.out.println(dataSet.ram.usedMem.size());
+//        System.out.println(dataSet.timeStamp.timeStamp.size());
+//        System.out.println(dataSet.nicList.get(0).tx.size());
     }
 
     //Measurement Values
@@ -102,28 +105,27 @@ public class Log {
     }
 
     //CPU
-    private static int getCpuCount(ArrayList array) {
+    private static void getCpuCount(DataSet dataSet, ArrayList array) {
         JSONArray valueArray = (JSONArray) array.get(0);
         JSONObject valueObject = (JSONObject) valueArray.get(0);
-
+        
         JSONArray cpuArray = (JSONArray) valueObject.get("c");
         JSONObject cpuValues = (JSONObject) cpuArray.get(0);
-
-        int count = cpuValues.size() / 2;
-        return count;
+        
+         dataSet.cpuCount = cpuValues.size() / 2;
     }
-
+    
     private static void getCpuLoad(DataSet dataSet, JSONObject obj, int cpuCount) {
         JSONArray cpuArray = (JSONArray) obj.get("c");
         JSONObject cpuValues = (JSONObject) cpuArray.get(0);
-
+        
         for (int i = 0; i < cpuCount; i++) {//Dynamically fill cpuS List based on cpu count
             workingSet.cpu.uCPU.add(setCpuLoad(cpuValues, "u" + i));
             workingSet.cpu.sCPU.add(setCpuLoad(cpuValues, "s" + i));
         }
         dataSet.cpuCores.add(workingSet.cpu);
     }
-
+    
     private static Double setCpuLoad(JSONObject obj, String key) {
         Double cpuLoad = 0.0;
         if (obj.containsKey(key)) {
@@ -147,7 +149,7 @@ public class Log {
         //printArrayList(set.ram.usedSwapMem);
 
     }
-
+    
     private static long setMemLoad(JSONObject obj, String key) {
         long memLoad = 0;
         if (obj.containsKey(key)) {
@@ -162,21 +164,21 @@ public class Log {
         JSONObject devObject = (JSONObject) devArray.get(0);
 
         for (int i = 0; i < devCount; i++) {
-            workingSet.dev.rds.add(setDevStat(devObject, dataSet.devNames[i] + "_rds"));
-            workingSet.dev.wrs.add(setDevStat(devObject, dataSet.devNames[i] + "_wrs"));
-            workingSet.dev.rdi.add(setDevStat(devObject, dataSet.devNames[i] + "_rdi"));
-            workingSet.dev.rdm.add(setDevStat(devObject, dataSet.devNames[i] + "_rdm"));
-            workingSet.dev.rdt.add(setDevStat(devObject, dataSet.devNames[i] + "_rdt"));
-            workingSet.dev.wri.add(setDevStat(devObject, dataSet.devNames[i] + "_wri"));
-            workingSet.dev.wrm.add(setDevStat(devObject, dataSet.devNames[i] + "_wrm"));
-            workingSet.dev.wrt.add(setDevStat(devObject, dataSet.devNames[i] + "_wrt"));
-            workingSet.dev.iop.add(setDevStat(devObject, dataSet.devNames[i] + "_iop"));
-            workingSet.dev.tot.add(setDevStat(devObject, dataSet.devNames[i] + "_tot"));
-            workingSet.dev.rqt.add(setDevStat(devObject, dataSet.devNames[i] + "_rqt"));
+            workingSet.dev.rds.add(setDevStat(devObject, dataSet.devNames.get(i)));
+            workingSet.dev.wrs.add(setDevStat(devObject, dataSet.devNames.get(i)));
+            workingSet.dev.rdi.add(setDevStat(devObject, dataSet.devNames.get(i)));
+            workingSet.dev.rdm.add(setDevStat(devObject, dataSet.devNames.get(i)));
+            workingSet.dev.rdt.add(setDevStat(devObject, dataSet.devNames.get(i)));
+            workingSet.dev.wri.add(setDevStat(devObject, dataSet.devNames.get(i)));
+            workingSet.dev.wrm.add(setDevStat(devObject, dataSet.devNames.get(i)));
+            workingSet.dev.wrt.add(setDevStat(devObject, dataSet.devNames.get(i)));
+            workingSet.dev.iop.add(setDevStat(devObject, dataSet.devNames.get(i)));
+            workingSet.dev.tot.add(setDevStat(devObject, dataSet.devNames.get(i)));
+            workingSet.dev.rqt.add(setDevStat(devObject, dataSet.devNames.get(i)));
         }
         dataSet.devList.add(workingSet.dev);
     }
-
+    
     private static long setDevStat(JSONObject obj, String key) {
         long devStat = 0;
         if (obj.containsKey(key)) {
@@ -184,37 +186,41 @@ public class Log {
         }
         return devStat;
     }
-
-    private static int getDevCount(ArrayList array) {
+    
+    private static void getDevNames(DataSet dataSet, ArrayList array) {
         JSONArray valueArray = (JSONArray) array.get(0);
         JSONObject valueObject = (JSONObject) valueArray.get(0);
-
+        
         JSONArray devArray = (JSONArray) valueObject.get("d");
         JSONObject devValues = (JSONObject) devArray.get(0);
-
-        int count = (devValues.size() / 11);
-        return count;
+        
+        dataSet.devNames = new ArrayList<>(devValues.keySet());
+        Collections.sort(dataSet.devNames);
+        
+        dataSet.devCount = (devValues.size() / 11);
     }
 
     //NETWORK
-    private static int getNicCount(ArrayList array) {
+    private static void getNICNames(DataSet dataSet, ArrayList array) {
         JSONArray valueArray = (JSONArray) array.get(0);
         JSONObject valueObject = (JSONObject) valueArray.get(0);
-
+        
         JSONArray nicArray = (JSONArray) valueObject.get("n");
         JSONObject nicValues = (JSONObject) nicArray.get(0);
-
-        int count = (nicValues.size() / 2);
-        return count;
+        
+        dataSet.nicNames = new ArrayList<>(nicValues.keySet());
+        Collections.sort(dataSet.nicNames);
+        
+        dataSet.nicCount = (nicValues.size() / 2);
     }
-
+    
     private static void getNetworkLoad(DataSet dataSet, JSONObject obj, int nicCount) {
         JSONArray nicArray = (JSONArray) obj.get("n");
         JSONObject nicValues = (JSONObject) nicArray.get(0);
-
+        
         for (int i = 0; i < nicCount; i++) {//Dynamically fill cpuS List based on cpu count
-            workingSet.nic.rx.add(setDevStat(nicValues, dataSet.nicNames[i] + "_rx"));
-            workingSet.nic.tx.add(setDevStat(nicValues, dataSet.nicNames[i] + "_tx"));
+            workingSet.nic.rx.add(setDevStat(nicValues, dataSet.nicNames.get(i)));
+            workingSet.nic.tx.add(setDevStat(nicValues, dataSet.nicNames.get(i)));
         }
         dataSet.nicList.add(workingSet.nic);
     }
@@ -224,7 +230,7 @@ public class Log {
         JSONArray jsonArray = (JSONArray) jsonObject.get(id);
         return jsonArray;
     }
-
+    
     private static JSONObject ArrayToObject(int index, JSONArray jsonArray) {
         JSONObject jsonObject = (JSONObject) jsonArray.get(index);
         return jsonObject;
@@ -238,7 +244,7 @@ public class Log {
             System.out.println(itr.next());
         }
     }
-
+    
     public static void printJSONObject(JSONObject ja) {
         //Iterator itr = jr.iterator();
         String test = ja.toString();
@@ -246,25 +252,25 @@ public class Log {
 
         System.out.println(test);
     }
-
-    public static void printArrayList(ArrayList list) {
+    
+    public static void printList(List list) {
         for (int i = 0; i < list.size(); i++) {
             System.out.println(list.get(i));
         }
     }
-
+    
     public static void printRAMSet(DataSet dataSet) {
         for (int i = 0; i < dataSet.ram.usedMem.size(); i++) {
             System.out.println(Long.toString(dataSet.ram.usedMem.get(i)));
         }
     }
-
+    
     public static void printDevName(DataSet dataSet) {
-        for (int i = 0; i < dataSet.devNames.length; i++) {
-            System.out.println(dataSet.devNames[i]);
+        for (int i = 0; i < dataSet.devNames.size(); i++) {
+            System.out.println(dataSet.devNames.get(i));
         }
     }
-
+    
     public static void printDiskStat(List<DataSet.DevValues> devList) {
         for (int i = 0; i < devList.size(); i++) {
             DataSet.DevValues dev = devList.get(i);
@@ -279,10 +285,10 @@ public class Log {
             System.out.println(dev.iop.get(i));
             System.out.println(dev.tot.get(i));
             System.out.println(dev.rqt.get(i));
-
+            
         }
     }
-
+    
     public static void printCPUSet(List<DataSet.CPUValues> cpuCores) {
         for (int i = 0; i < cpuCores.size(); i++) {
             DataSet.CPUValues cpu = cpuCores.get(i);
@@ -290,7 +296,7 @@ public class Log {
             System.out.println(cpu.sCPU.get(i));
         }
     }
-
+    
     public static void printNicStats(List<DataSet.NICValues> nics) {
         for (int i = 0; i < nics.size(); i++) {
             DataSet.NICValues nic = nics.get(i);
@@ -298,5 +304,5 @@ public class Log {
             System.out.println(nic.tx.get(i));
         }
     }
-
+    
 }

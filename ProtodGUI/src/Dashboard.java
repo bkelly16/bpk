@@ -223,7 +223,7 @@ public class Dashboard extends javax.swing.JFrame {
             Log.importLog(dataSet);
             //Log.printCPUSet(dataSet.cpuCores);
             //Log.printDiskStat(dataSet.devList);
-            //Log.printNicStats(dataSet.nicList);
+            Log.printNicStats(dataSet.nicList);
             updateHeaderDisplay();
 
         } catch (IOException | ParseException ex) {

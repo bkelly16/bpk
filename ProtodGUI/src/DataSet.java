@@ -63,7 +63,7 @@ public class DataSet {
         public List<Long> rx = new ArrayList<>();
         public List<Long> tx = new ArrayList<>();
     }
-
+    
     public String filePath = "F:\\Work\\Log Files\\v.012_test.plf";
 
     Header header = new Header();
@@ -74,15 +74,17 @@ public class DataSet {
 
     CPUValues cpu = new CPUValues();
     List<CPUValues> cpuCores = new ArrayList<>();
+    int cpuCount = 0;
 
     RAMValues ram = new RAMValues();
 
-    String[] nicNames = {"eno1", "eno2", "ens11f0", "ens11f1", "lo"};
     DevValues dev = new DevValues();
     List<DevValues> devList = new ArrayList<>();
-
-    String[] devNames = {"sda", "sdb", "sdc", "sdd", "sde", "sdf", "sdg", "sdh", "sdi", "sdj", "sdk", "sdl", "sdm", "sdn", "sdo", "sdp", "sdq", "sdr", "sds", "sdt", "sdu", "sdv", "sdw", "sdx", "sdy", "sdz", "sdaa", "sdab", "sdac", "sdad", "sdae", "sdaf", "sdag", "sdah", "sdai", "sdaj", "sdak", "sdl", "sdam", "sdan", "sdao", "sdap", "sdaq", "sdar", "sdas", "sdat", "sdau", "md126", "md127"};
+    List<String> devNames = new ArrayList<>();
+    int devCount = 0;
+    
     NICValues nic = new NICValues();
     List<NICValues> nicList = new ArrayList<>();
-
+    List<String> nicNames = new ArrayList<>();
+    int nicCount = 0;
 }
