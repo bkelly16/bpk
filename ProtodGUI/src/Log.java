@@ -31,7 +31,7 @@ public class Log {
         JSONParser parser = new JSONParser();
         log = parser.parse(new FileReader(file));
         logObject = (JSONObject) log;
-        logArray = (JSONArray) logObject.get("Log");
+        logArray = (JSONArray) logObject.get("log");
     }
 
     ////GET & SET Header, Threshold & Measurement Values 
@@ -90,12 +90,14 @@ public class Log {
             getDeviceStat(dataSet, valueObject, dataSet.devCount);
             getNetworkLoad(dataSet, valueObject, dataSet.nicCount);
         }
-//        System.out.println(dataSet.devList.size());
-//        System.out.println(dataSet.cpuCores.size());
-//        System.out.println(dataSet.nicList.size());
-//        System.out.println(dataSet.ram.usedMem.size());
-//        System.out.println(dataSet.timeStamp.timeStamp.size());
+        System.out.println(dataSet.devList.size());
+        System.out.println(dataSet.cpuCores.size());
+        System.out.println(dataSet.nicList.size());
+        System.out.println(dataSet.ram.usedMem.size());
+        System.out.println(dataSet.timeStamp.timeStamp.size());
 //        System.out.println(dataSet.nicList.get(0).tx.size());
+//        System.out.println(dataSet.devList.get(0).iop.size());
+//        System.out.println(dataSet.cpuCores.get(0).sCPU.size());
     }
 
     //Measurement Values
@@ -128,13 +130,14 @@ public class Log {
     
     private static Double setCpuLoad(JSONObject obj, String key) {
         Double cpuLoad = 0.0;
+        
         if (obj.containsKey(key)) {
             cpuLoad = (Double) obj.get(key);
         }
         return cpuLoad;
     }
 
-    //MEMORY    
+    //MEMORY  
     private static void getMemLoad(DataSet dataSet, JSONObject obj) {
         JSONArray memArray = (JSONArray) obj.get("r");
         JSONObject memValues = (JSONObject) memArray.get(0);
@@ -164,17 +167,17 @@ public class Log {
         JSONObject devObject = (JSONObject) devArray.get(0);
 
         for (int i = 0; i < devCount; i++) {
-            workingSet.dev.rds.add(setDevStat(devObject, dataSet.devNames.get(i)));
-            workingSet.dev.wrs.add(setDevStat(devObject, dataSet.devNames.get(i)));
-            workingSet.dev.rdi.add(setDevStat(devObject, dataSet.devNames.get(i)));
-            workingSet.dev.rdm.add(setDevStat(devObject, dataSet.devNames.get(i)));
-            workingSet.dev.rdt.add(setDevStat(devObject, dataSet.devNames.get(i)));
-            workingSet.dev.wri.add(setDevStat(devObject, dataSet.devNames.get(i)));
-            workingSet.dev.wrm.add(setDevStat(devObject, dataSet.devNames.get(i)));
-            workingSet.dev.wrt.add(setDevStat(devObject, dataSet.devNames.get(i)));
-            workingSet.dev.iop.add(setDevStat(devObject, dataSet.devNames.get(i)));
-            workingSet.dev.tot.add(setDevStat(devObject, dataSet.devNames.get(i)));
-            workingSet.dev.rqt.add(setDevStat(devObject, dataSet.devNames.get(i)));
+            workingSet.dev.rds.add(setDevStat(devObject, dataSet.devNames.get(i)+"_rds"));
+            workingSet.dev.wrs.add(setDevStat(devObject, dataSet.devNames.get(i)+"_wrs"));
+            workingSet.dev.rdi.add(setDevStat(devObject, dataSet.devNames.get(i)+"_rdi"));
+            workingSet.dev.rdm.add(setDevStat(devObject, dataSet.devNames.get(i)+"_rdm"));
+            workingSet.dev.rdt.add(setDevStat(devObject, dataSet.devNames.get(i)+"_rdt"));
+            workingSet.dev.wri.add(setDevStat(devObject, dataSet.devNames.get(i)+"_wri"));
+            workingSet.dev.wrm.add(setDevStat(devObject, dataSet.devNames.get(i)+"_wrm"));
+            workingSet.dev.wrt.add(setDevStat(devObject, dataSet.devNames.get(i)+"_wrt"));
+            workingSet.dev.iop.add(setDevStat(devObject, dataSet.devNames.get(i)+"_iop"));
+            workingSet.dev.tot.add(setDevStat(devObject, dataSet.devNames.get(i)+"_tot"));
+            workingSet.dev.rqt.add(setDevStat(devObject, dataSet.devNames.get(i)+"_rqt"));
         }
         dataSet.devList.add(workingSet.dev);
     }
@@ -194,9 +197,12 @@ public class Log {
         JSONArray devArray = (JSONArray) valueObject.get("d");
         JSONObject devValues = (JSONObject) devArray.get(0);
         
-        dataSet.devNames = new ArrayList<>(devValues.keySet());
-        Collections.sort(dataSet.devNames);
+        workingSet.devNames = new ArrayList<>(devValues.keySet());
+        Collections.sort(workingSet.devNames);
         
+        for (int i=0;i<workingSet.devNames.size();i++) {
+            if(i % 11 == 0) dataSet.devNames.add(workingSet.devNames.get(i).split("_")[0]);
+        }     
         dataSet.devCount = (devValues.size() / 11);
     }
 
@@ -208,9 +214,12 @@ public class Log {
         JSONArray nicArray = (JSONArray) valueObject.get("n");
         JSONObject nicValues = (JSONObject) nicArray.get(0);
         
-        dataSet.nicNames = new ArrayList<>(nicValues.keySet());
-        Collections.sort(dataSet.nicNames);
+        workingSet.nicNames = new ArrayList<>(nicValues.keySet());
+        Collections.sort(workingSet.nicNames);
         
+        for (int i=0;i<workingSet.nicNames.size();i++){
+            if(i % 2 == 0) dataSet.nicNames.add(workingSet.nicNames.get(i).split("_")[0]);
+        }
         dataSet.nicCount = (nicValues.size() / 2);
     }
     
@@ -219,8 +228,8 @@ public class Log {
         JSONObject nicValues = (JSONObject) nicArray.get(0);
         
         for (int i = 0; i < nicCount; i++) {//Dynamically fill cpuS List based on cpu count
-            workingSet.nic.rx.add(setDevStat(nicValues, dataSet.nicNames.get(i)));
-            workingSet.nic.tx.add(setDevStat(nicValues, dataSet.nicNames.get(i)));
+            workingSet.nic.rx.add(setDevStat(nicValues, dataSet.nicNames.get(i)+"_rx"));
+            workingSet.nic.tx.add(setDevStat(nicValues, dataSet.nicNames.get(i)+"_tx"));
         }
         dataSet.nicList.add(workingSet.nic);
     }
@@ -268,6 +277,12 @@ public class Log {
     public static void printDevName(DataSet dataSet) {
         for (int i = 0; i < dataSet.devNames.size(); i++) {
             System.out.println(dataSet.devNames.get(i));
+        }
+    }
+    
+    public static void printNICName(DataSet dataSet) {
+        for (int i = 0; i < dataSet.nicNames.size(); i++) {
+            System.out.println(dataSet.nicNames.get(i));
         }
     }
     

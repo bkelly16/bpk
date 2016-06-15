@@ -11,7 +11,7 @@ public class DataSet {
         public double totalCPU = 0;//totalCPU is 100.0 * the number of CPUs. If hyperthreading is present then the value is 100.0 * the number of hyperthreads
         public long totalRAM = 0;
     }
-
+   
     public class Threshold {
 
         public long iniTimeStamp = 0;
@@ -64,7 +64,7 @@ public class DataSet {
         public List<Long> tx = new ArrayList<>();
     }
     
-    public String filePath = "F:\\Work\\Log Files\\v.012_test.plf";
+    public String filePath = "F:\\Work\\Log Files\\v13.testjson.20160614.plf";
 
     Header header = new Header();
 

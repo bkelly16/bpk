@@ -1,5 +1,4 @@
 
-import java.awt.Color;
 
 /*
  * To change this license header, choose License Headers in Project Properties.
@@ -42,8 +41,6 @@ public class ProtodGUI {
         Dashboard form = new Dashboard();
         form.updateHeaderDisplay();
         form.setVisible(true);
-        
-        
         
     }
     
