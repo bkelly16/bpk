@@ -237,11 +237,15 @@ public class Dashboard extends javax.swing.JFrame {
             } else {
                 System.out.println("File access cancelled by user.");
             }
-            Log.importLog(dataSet);
+            if( dataSet.header.dateStamp == 0){
+                    Log.importLog(dataSet);
+            }else{
+                System.out.println("Log Already Imported, Clear First");
+            }
             //Log.printCPUSet(dataSet.cpuCores);
             //Log.printDevName(dataSet);
             //Log.printNICName(dataSet);
-            Log.printNicStats(dataSet.nicList);
+            //Log.printNicStats(dataSet.nicList);
             updateHeaderDisplay();
 
         } catch (IOException | ParseException ex) {
@@ -293,14 +297,29 @@ public class Dashboard extends javax.swing.JFrame {
         dataSet.threshold.thresholdNetwork = 0;
         dataSet.cpu.sCPU.clear();
         dataSet.cpu.uCPU.clear();
+        dataSet.cpuCores.clear();
         dataSet.ram.sharedMem.clear();
         dataSet.ram.buffMem.clear();
         dataSet.ram.cacheMem.clear();
         dataSet.ram.usedMem.clear();
         dataSet.ram.usedSwapMem.clear();
-
-        //set1.dataBus.clear();
-        //set1.networkBus.clear();
+        dataSet.devList.clear();
+        dataSet.devNames.clear();
+        dataSet.dev.iop.clear();
+        dataSet.dev.rdi.clear();
+        dataSet.dev.rdm.clear();
+        dataSet.dev.rds.clear();
+        dataSet.dev.rdt.clear();
+        dataSet.dev.rqt.clear();
+        dataSet.dev.tot.clear();
+        dataSet.dev.wri.clear();
+        dataSet.dev.wrm.clear();
+        dataSet.dev.wrs.clear();
+        dataSet.dev.wrt.clear();
+        dataSet.nic.rx.clear();
+        dataSet.nic.tx.clear();
+        dataSet.nicList.clear();
+        dataSet.nicNames.clear();
         dataSet.timeStamp.timeStamp.clear();
         updateHeaderDisplay();
     }//GEN-LAST:event_clearDataActionPerformed
