@@ -4,11 +4,14 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Iterator;
+import java.util.LinkedList;
 import java.util.List;
+import java.util.Objects;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
+import sun.java2d.pipe.ValidatePipe;
 
 public class Log {
     
@@ -66,7 +69,7 @@ public class Log {
         JSONObject values = ArrayToObject(2, logArray);
         JSONArray valuesArray = (JSONArray) values.get("values");
         
-        ArrayList<JSONArray> listofMeasurements = new ArrayList<>(values.size());
+        ArrayList<JSONArray> listofMeasurements = new ArrayList<>();
         
         for (int i = 0; i < valuesArray.size(); i++) { //Loop through valuesArray, get measureObject[i] enter into MeasurementList
             JSONObject measureObject = (JSONObject) valuesArray.get(i);
@@ -74,28 +77,44 @@ public class Log {
             listofMeasurements.add(measureArray);
         }
         getCpuCount(dataSet, listofMeasurements);
+        //System.out.println(String.valueOf(dataSet.cpuCount));
         getDevNames(dataSet, listofMeasurements);
         getNICNames(dataSet, listofMeasurements);
+        //System.out.println(listofMeasurements.size());
         
+        for (int i = 0;i<dataSet.cpuCount;i++){
+            DataSet.CPUValues temp = workingSet.new CPUValues();
+            for(int n= 0; n < listofMeasurements.size(); n++){
+                JSONArray valueArray = (JSONArray) listofMeasurements.get(n); // create JSONArray out of current line
+                JSONObject valueObject = (JSONObject) valueArray.get(0); // grab first entry in Array
+                dataSet.cpuCores.add(getCpuLoad(temp, valueObject, i));
+            }
+            dataSet.cpuCores.add(dataSet.cpu);
+            
+        }
+        System.out.println(dataSet.cpuCores.size());
+        System.out.println(dataSet.cpuCores.get(0).uCPU.get(0));
+        System.out.println(dataSet.cpuCores.get(0).uCPU.get(99));
         for (int n = 0; n < listofMeasurements.size(); n++) { // Loop through the List of measurements
             JSONArray valueArray = (JSONArray) listofMeasurements.get(n); // create JSONArray out of current line
             JSONObject valueObject = (JSONObject) valueArray.get(0); // grab first entry in Array
 
             getTimeStamp(dataSet, valueObject);
             getMemLoad(dataSet, valueObject);
-            
-            getCpuLoad(dataSet, valueObject, dataSet.cpuCount);
+
             getDeviceStat(dataSet, valueObject, dataSet.devCount);
             getNetworkLoad(dataSet, valueObject, dataSet.nicCount);
         }
-        System.out.println(dataSet.devList.size());
-        System.out.println(dataSet.cpuCores.size());
-        System.out.println(dataSet.nicList.size());
-        System.out.println(dataSet.ram.usedMem.size());
-        System.out.println(dataSet.timeStamp.timeStamp.size());
+        
+//        System.out.println(dataSet.devList.size());
+//        System.out.println(dataSet.nicList.size());
+//        System.out.println(dataSet.ram.usedMem.size());
+//        System.out.println(dataSet.timeStamp.timeStamp.size());
+   
 //        System.out.println(dataSet.nicList.get(0).tx.size());
 //        System.out.println(dataSet.devList.get(0).iop.size());
-//        System.out.println(dataSet.cpuCores.get(0).sCPU.size());
+        //System.out.println(dataSet.cpuCores.size());
+        //System.out.println(dataSet.cpuCores.get(0).uCPU.size());
     }
 
     //Measurement Values
@@ -108,24 +127,28 @@ public class Log {
     private static void getCpuCount(DataSet dataSet, ArrayList array) {
         JSONArray valueArray = (JSONArray) array.get(0);
         JSONObject valueObject = (JSONObject) valueArray.get(0);
-        
+         
         JSONArray cpuArray = (JSONArray) valueObject.get("c");
         JSONObject cpuValues = (JSONObject) cpuArray.get(0);
+        
+        workingSet.cpuNames = new LinkedList<>(cpuValues.keySet());
+        Collections.sort(workingSet.cpuNames);
+
+        for (int i=0;i<workingSet.cpuNames.size();i++){
+            dataSet.cpuNames.add("cpu_"+workingSet.cpuNames.get(i).substring(1));
+        }
         
          dataSet.cpuCount = cpuValues.size() / 2;
     }
     
-    private static void getCpuLoad(DataSet dataSet, JSONObject obj, int cpuCount) {
+    public static DataSet.CPUValues getCpuLoad(DataSet.CPUValues temp, JSONObject obj, int i) {
         JSONArray cpuArray = (JSONArray) obj.get("c");
         JSONObject cpuValues = (JSONObject) cpuArray.get(0);
-        
-        for (int i = 0; i < cpuCount; i++) {//Dynamically fill cpuS List based on cpu count
-            workingSet.cpu.uCPU.add(setCpuLoad(cpuValues, "u" + i));
-            workingSet.cpu.sCPU.add(setCpuLoad(cpuValues, "s" + i));
-        }
-        dataSet.cpuCores.add(workingSet.cpu);
+        temp.uCPU.add((Double) cpuValues.get("u"+i));
+        temp.sCPU.add((Double) cpuValues.get("s"+i));
+        return temp;
     }
-    
+
     private static Double setCpuLoad(JSONObject obj, String key) {
         Double cpuLoad = 0.0;
         
@@ -195,7 +218,7 @@ public class Log {
         JSONArray devArray = (JSONArray) valueObject.get("d");
         JSONObject devValues = (JSONObject) devArray.get(0);
         
-        workingSet.devNames = new ArrayList<>(devValues.keySet());
+        workingSet.devNames = new LinkedList<>(devValues.keySet());
         Collections.sort(workingSet.devNames);
         
         for (int i=0;i<workingSet.devNames.size();i++) {
@@ -212,7 +235,7 @@ public class Log {
         JSONArray nicArray = (JSONArray) valueObject.get("n");
         JSONObject nicValues = (JSONObject) nicArray.get(0);
         
-        workingSet.nicNames = new ArrayList<>(nicValues.keySet());
+        workingSet.nicNames = new LinkedList<>(nicValues.keySet());
         Collections.sort(workingSet.nicNames);
         
         for (int i=0;i<workingSet.nicNames.size();i++){
@@ -318,4 +341,11 @@ public class Log {
         }
     }
     
+    public static void printCPUName(DataSet dataSet) {
+        for (int i = 0; i < dataSet.cpuNames.size(); i++) {
+            System.out.println(dataSet.cpuNames.get(i));
+        }
+    }
+
+
 }

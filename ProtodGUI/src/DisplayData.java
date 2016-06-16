@@ -13,15 +13,13 @@ import java.util.List;
  * @author Brett
  */
 public class DisplayData {
-    
-    public static void cpuPlot(List<Double> cpuSet, List<Long> timeSet, String title){
+
+    public static void cpuPlot(List<Double> cpuSet, List<Long> timeSet, String title, String label){
         ArrayList<Long> longCpuSet = new ArrayList<>(cpuSet.size());
         for(int i =0;i<cpuSet.size();i++){
             longCpuSet.add(cpuSet.get(i).longValue());
-        }
-        
-        
-        timePlot graph = new timePlot("Resource Usage", title, "Utiliztaion (%)", longCpuSet , timeSet);
+        }        
+        timePlot graph = new timePlot(label, title, "Utiliztaion (%)", longCpuSet , timeSet);
         graph.showChart();
     }
 
@@ -32,12 +30,12 @@ public class DisplayData {
         graph.showChart();
     }
     
-    public static void dataPlot(List<Long> dataSet, List<Long> timeSet, String title){
+    public static void dataPlot(List<Long> dataSet, List<Long> timeSet, String title, String label){
         timePlot graph = new timePlot("Resource Usage", title, "Data IO (Bytes)", dataSet , timeSet);
         graph.showChart();
     }
     
-    public static void networkPlot(List<Long> networkSet, List<Long> timeSet){
+    public static void networkPlot(List<Long> networkSet, List<Long> timeSet, String title, String label){
         timePlot graph = new timePlot("Resource Usage", "Network Transfer", "Data IO (Bytes)", networkSet , timeSet);
         graph.showChart();
     }    

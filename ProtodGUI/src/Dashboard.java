@@ -1,9 +1,14 @@
 
 import java.io.File;
 import java.io.IOException;
+import java.util.ListIterator;
+import java.util.Objects;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.DefaultListModel;
 import javax.swing.JFileChooser;
+import org.jfree.data.xy.XYSeries;
+import org.jfree.data.xy.XYSeriesCollection;
 import org.json.simple.parser.ParseException;
 
 /**
@@ -45,7 +50,13 @@ public class Dashboard extends javax.swing.JFrame {
         jScrollPane9 = new javax.swing.JScrollPane();
         ramDisplay = new javax.swing.JTextPane();
         clearData = new javax.swing.JButton();
-        displayChart = new javax.swing.JButton();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        jListDev = new javax.swing.JList<>();
+        jScrollPane2 = new javax.swing.JScrollPane();
+        jListNIC = new javax.swing.JList<>();
+        jScrollPane3 = new javax.swing.JScrollPane();
+        jListCPU = new javax.swing.JList<>();
+        debug1 = new javax.swing.JTextField();
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -125,103 +136,119 @@ public class Dashboard extends javax.swing.JFrame {
             }
         });
 
-        displayChart.setText("Display Data");
-        displayChart.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                displayChartActionPerformed(evt);
-            }
-        });
+        jScrollPane1.setViewportView(jListDev);
+
+        jScrollPane2.setViewportView(jListNIC);
+
+        jScrollPane3.setViewportView(jListCPU);
+
+        debug1.setText("jTextField1");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addComponent(jLabel2)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                                .addComponent(idLabel1)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jScrollPane9, javax.swing.GroupLayout.PREFERRED_SIZE, 214, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                    .addComponent(dateLabel1)
-                                    .addComponent(idLabel))
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                    .addComponent(jScrollPane7)
-                                    .addComponent(jScrollPane8, javax.swing.GroupLayout.DEFAULT_SIZE, 214, Short.MAX_VALUE)))
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                                .addComponent(dateLabel)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jScrollPane6, javax.swing.GroupLayout.PREFERRED_SIZE, 214, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                                .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 198, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addContainerGap())
-                            .addGroup(layout.createSequentialGroup()
-                                .addGap(143, 143, 143)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(importData, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 145, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(clearData, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 145, javax.swing.GroupLayout.PREFERRED_SIZE)))))
+                        .addGap(164, 164, 164)
+                        .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 198, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(0, 0, Short.MAX_VALUE))
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(0, 50, Short.MAX_VALUE)
-                        .addComponent(displayChart)
-                        .addGap(26, 26, 26)
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jLabel2)))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(15, 15, 15)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                            .addComponent(cpuChart, javax.swing.GroupLayout.DEFAULT_SIZE, 87, Short.MAX_VALUE)
+                            .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                                .addComponent(cpuChart, javax.swing.GroupLayout.PREFERRED_SIZE, 93, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(ramChart, javax.swing.GroupLayout.PREFERRED_SIZE, 93, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(layout.createSequentialGroup()
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                    .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
+                                    .addComponent(networkChart, javax.swing.GroupLayout.PREFERRED_SIZE, 90, Short.MAX_VALUE))
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(ramChart, javax.swing.GroupLayout.PREFERRED_SIZE, 93, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                                .addComponent(dataChart, javax.swing.GroupLayout.PREFERRED_SIZE, 93, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(networkChart))))))
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 92, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(dataChart, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 93, javax.swing.GroupLayout.PREFERRED_SIZE)))))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(18, 18, 18)
+                        .addComponent(importData, javax.swing.GroupLayout.PREFERRED_SIZE, 122, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(clearData, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                                    .addComponent(idLabel1)
+                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                    .addComponent(jScrollPane9, javax.swing.GroupLayout.PREFERRED_SIZE, 214, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                        .addComponent(dateLabel1)
+                                        .addComponent(idLabel))
+                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                        .addComponent(jScrollPane7)
+                                        .addComponent(jScrollPane8, javax.swing.GroupLayout.PREFERRED_SIZE, 214, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                                    .addComponent(dateLabel)
+                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                    .addComponent(jScrollPane6, javax.swing.GroupLayout.PREFERRED_SIZE, 214, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                        .addGroup(layout.createSequentialGroup()
+                            .addGap(129, 129, 129)
+                            .addComponent(debug1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(56, 56, 56)
-                .addComponent(jLabel3)
-                .addGap(53, 53, 53)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jScrollPane6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(dateLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 14, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jScrollPane7, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(idLabel))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jScrollPane8, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(dateLabel1))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jScrollPane9, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(idLabel1))
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(18, 18, 18)
+                        .addGap(29, 29, 29)
+                        .addComponent(jLabel3)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(44, 44, 44)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(jScrollPane6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(dateLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 14, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(jScrollPane7, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(idLabel))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(jScrollPane8, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(dateLabel1))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(jScrollPane9, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(idLabel1))
+                        .addGap(26, 26, 26)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(clearData)
+                            .addComponent(importData))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(debug1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(9, 9, 9)
+                        .addComponent(ramChart)
+                        .addGap(7, 7, 7)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(cpuChart)
-                            .addComponent(ramChart))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(networkChart)
-                            .addComponent(dataChart)))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(30, 30, 30)
-                        .addComponent(displayChart)))
-                .addGap(18, 18, 18)
-                .addComponent(importData)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(clearData)
-                .addGap(23, 23, 23))
-            .addGroup(layout.createSequentialGroup()
-                .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 421, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, Short.MAX_VALUE))
+                            .addComponent(dataChart))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jScrollPane3, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 269, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 269, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 269, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                .addContainerGap(12, Short.MAX_VALUE))
         );
 
         pack();
@@ -237,16 +264,18 @@ public class Dashboard extends javax.swing.JFrame {
             } else {
                 System.out.println("File access cancelled by user.");
             }
-            if( dataSet.header.dateStamp == 0){
-                    Log.importLog(dataSet);
-            }else{
+            if (dataSet.header.dateStamp == 0) {
+                Log.importLog(dataSet);
+            } else {
                 System.out.println("Log Already Imported, Clear First");
             }
+            updateListDisplay();
             //Log.printCPUSet(dataSet.cpuCores);
             //Log.printDevName(dataSet);
             //Log.printNICName(dataSet);
-            //Log.printNicStats(dataSet.nicList);
+            //Log.printCPUSet(dataSet.cpuCores);
             updateHeaderDisplay();
+            //if (!Objects.equals(dataSet.cpuCores.get(0).sCPU.get(0), dataSet.cpuCores.get(1).sCPU.get(0))) debug1.setText("success");
 
         } catch (IOException | ParseException ex) {
             Logger.getLogger(Dashboard.class.getName()).log(Level.SEVERE, null, ex);
@@ -254,8 +283,12 @@ public class Dashboard extends javax.swing.JFrame {
     }//GEN-LAST:event_importDataActionPerformed
 
     private void cpuChartActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cpuChartActionPerformed
-        DisplayData.cpuPlot(dataSet.cpu.uCPU, dataSet.timeStamp.timeStamp, "User Load %");
-        DisplayData.cpuPlot(dataSet.cpu.sCPU, dataSet.timeStamp.timeStamp, "System Load %");
+        int index = jListCPU.getSelectedIndex();
+        String label = jListCPU.getSelectedValue();
+        debug1.setText(String.valueOf(index));
+        DisplayData.cpuPlot(dataSet.cpuCores.get(index).uCPU, dataSet.timeStamp.timeStamp, "User Load %",label );
+        DisplayData.cpuPlot(dataSet.cpuCores.get(index).sCPU, dataSet.timeStamp.timeStamp, "System Load %",label);
+
     }//GEN-LAST:event_cpuChartActionPerformed
 
     private void ramChartActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ramChartActionPerformed
@@ -268,21 +301,28 @@ public class Dashboard extends javax.swing.JFrame {
     }//GEN-LAST:event_ramChartActionPerformed
 
     private void dataChartActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_dataChartActionPerformed
-        DisplayData.dataPlot(dataSet.dev.rds, dataSet.timeStamp.timeStamp, "Sectors Read Succesfully");
-        DisplayData.dataPlot(dataSet.dev.wrs, dataSet.timeStamp.timeStamp, "Sectors Written Succesfully");
-        DisplayData.dataPlot(dataSet.dev.rdi, dataSet.timeStamp.timeStamp, "Read IOs Completed");
-        DisplayData.dataPlot(dataSet.dev.rdm, dataSet.timeStamp.timeStamp, "Number of Reads Merged");
-        DisplayData.dataPlot(dataSet.dev.rdt, dataSet.timeStamp.timeStamp, "Total Milliseconds Spent By Reads");
-        DisplayData.dataPlot(dataSet.dev.wri, dataSet.timeStamp.timeStamp, "Write IOS Completed");
-        DisplayData.dataPlot(dataSet.dev.wrm, dataSet.timeStamp.timeStamp, "Number of Writes Merged");
-        DisplayData.dataPlot(dataSet.dev.wrt, dataSet.timeStamp.timeStamp, "Total Milliseconds Spent By Writes");
-        DisplayData.dataPlot(dataSet.dev.iop, dataSet.timeStamp.timeStamp, "Total # of IOs in Progress");
-        DisplayData.dataPlot(dataSet.dev.tot, dataSet.timeStamp.timeStamp, "Number of Milliseoncd spent on IO");
-        DisplayData.dataPlot(dataSet.dev.rqt, dataSet.timeStamp.timeStamp, "Weighted # of Milliseconds Spent oo IO");
+        int index = jListDev.getSelectedIndex();
+        //System.out.println(index);
+        String label = jListDev.getSelectedValue();
+        DisplayData.dataPlot(dataSet.devList.get(index).rds, dataSet.timeStamp.timeStamp, "Sectors Read Succesfully",label);
+        DisplayData.dataPlot(dataSet.devList.get(index).wrs, dataSet.timeStamp.timeStamp, "Sectors Written Succesfully",label);
+        DisplayData.dataPlot(dataSet.devList.get(index).rdi, dataSet.timeStamp.timeStamp, "Read IOs Completed",label);
+        DisplayData.dataPlot(dataSet.devList.get(index).rdm, dataSet.timeStamp.timeStamp, "Number of Reads Merged",label);
+        DisplayData.dataPlot(dataSet.devList.get(index).rdt, dataSet.timeStamp.timeStamp, "Total Milliseconds Spent By Reads",label);
+        DisplayData.dataPlot(dataSet.devList.get(index).wri, dataSet.timeStamp.timeStamp, "Write IOS Completed",label);
+        DisplayData.dataPlot(dataSet.devList.get(index).wrm, dataSet.timeStamp.timeStamp, "Number of Writes Merged",label);
+        DisplayData.dataPlot(dataSet.devList.get(index).wrt, dataSet.timeStamp.timeStamp, "Total Milliseconds Spent By Writes",label);
+        DisplayData.dataPlot(dataSet.devList.get(index).iop, dataSet.timeStamp.timeStamp, "Total # of IOs in Progress",label);
+        DisplayData.dataPlot(dataSet.devList.get(index).tot, dataSet.timeStamp.timeStamp, "Number of Milliseoncd spent on IO",label);
+        DisplayData.dataPlot(dataSet.devList.get(index).rqt, dataSet.timeStamp.timeStamp, "Weighted # of Milliseconds Spent oo IO",label);
     }//GEN-LAST:event_dataChartActionPerformed
 
     private void networkChartActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_networkChartActionPerformed
-        //DisplayData.networkPlot(set1.networkBus, set1.timeStamp);
+        int index = jListNIC.getSelectedIndex();
+        String label = jListNIC.getSelectedValue();
+        DisplayData.networkPlot(dataSet.nicList.get(index).rx,dataSet.timeStamp.timeStamp, "Bytes Received", label);
+        DisplayData.networkPlot(dataSet.nicList.get(index).tx,dataSet.timeStamp.timeStamp, "Bytes Sent", label);
+        
     }//GEN-LAST:event_networkChartActionPerformed
 
     private void clearDataActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_clearDataActionPerformed
@@ -321,43 +361,47 @@ public class Dashboard extends javax.swing.JFrame {
         dataSet.nicList.clear();
         dataSet.nicNames.clear();
         dataSet.timeStamp.timeStamp.clear();
+        clearList();
         updateHeaderDisplay();
+        
     }//GEN-LAST:event_clearDataActionPerformed
-
-    private void displayChartActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_displayChartActionPerformed
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(Dashboard.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(Dashboard.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(Dashboard.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(Dashboard.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        }
-        //</editor-fold>
-
-        ChartDisplay subForm = new ChartDisplay();
-        System.out.println(subForm.getSize());
-        //subForm.updateHeaderDisplay();
-        subForm.setVisible(true);
-    }//GEN-LAST:event_displayChartActionPerformed
 
     public void updateHeaderDisplay() {
         dateDisplay.setText(String.valueOf(dataSet.header.dateStamp));
         idDisplay.setText(String.valueOf(dataSet.header.machineID));
         cpuDisplay.setText(String.valueOf(dataSet.header.totalCPU));
         ramDisplay.setText(String.valueOf((dataSet.header.totalRAM) / (1000)));
+    }
+
+    private void updateListDisplay() {
+//        ListIterator itr = dataSet.nicNames.listIterator();
+//        while(itr.hasNext()){
+//            jListNIC.addE
+//        }
+        DefaultListModel nicList = new DefaultListModel();
+        DefaultListModel devList = new DefaultListModel();
+        DefaultListModel cpuList = new DefaultListModel();
+        for(int i =0;i<dataSet.nicNames.size();i++){
+            nicList.addElement(dataSet.nicNames.get(i));
+        }
+        for(int i=0;i<dataSet.devNames.size();i++){
+            devList.addElement(dataSet.devNames.get(i));
+        }
+        for(int i=0;i<dataSet.cpuCount;i++){
+            cpuList.addElement(dataSet.cpuNames.get(i));
+        }
+        jListNIC.setModel(nicList);
+        jListDev.setModel(devList);
+        jListCPU.setModel(cpuList);
+    }
+    private void clearList() {
+        DefaultListModel listModel = (DefaultListModel) jListCPU.getModel();
+        DefaultListModel listModel1 = (DefaultListModel) jListDev.getModel();
+        DefaultListModel listModel2 = (DefaultListModel) jListNIC.getModel();
+        listModel.removeAllElements();
+        listModel1.removeAllElements();
+        listModel2.removeAllElements();
+        
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -368,7 +412,7 @@ public class Dashboard extends javax.swing.JFrame {
     private javax.swing.JTextPane dateDisplay;
     private javax.swing.JLabel dateLabel;
     private javax.swing.JLabel dateLabel1;
-    private javax.swing.JButton displayChart;
+    public javax.swing.JTextField debug1;
     private javax.swing.JFileChooser fileChooser;
     private javax.swing.JTextPane idDisplay;
     private javax.swing.JLabel idLabel;
@@ -377,7 +421,13 @@ public class Dashboard extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
+    private javax.swing.JList<String> jListCPU;
+    private javax.swing.JList<String> jListDev;
+    private javax.swing.JList<String> jListNIC;
     private javax.swing.JPanel jPanel1;
+    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JScrollPane jScrollPane2;
+    private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JScrollPane jScrollPane6;
     private javax.swing.JScrollPane jScrollPane7;
     private javax.swing.JScrollPane jScrollPane8;
@@ -386,4 +436,5 @@ public class Dashboard extends javax.swing.JFrame {
     private javax.swing.JButton ramChart;
     private javax.swing.JTextPane ramDisplay;
     // End of variables declaration//GEN-END:variables
+
 }

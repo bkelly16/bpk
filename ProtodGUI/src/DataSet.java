@@ -1,6 +1,7 @@
 
 import java.util.List;
 import java.util.ArrayList;
+import java.util.LinkedList;
 
 public class DataSet {
 
@@ -35,7 +36,7 @@ public class DataSet {
 
     public class RAMValues {
 
-        public List<Long> usedMem = new ArrayList<>();
+        public List<Long> usedMem = new LinkedList<>();
         public List<Long> sharedMem = new ArrayList<>();
         public List<Long> buffMem = new ArrayList<>();
         public List<Long> cacheMem = new ArrayList<>();
@@ -64,7 +65,7 @@ public class DataSet {
         public List<Long> tx = new ArrayList<>();
     }
     
-    public String filePath = "F:\\Work\\Log Files\\v13.testjson.20160614.plf";
+    public String filePath = "F:\\Work\\Log Files\\test.vm.20160615.plf";
 
     Header header = new Header();
 
@@ -74,6 +75,7 @@ public class DataSet {
 
     CPUValues cpu = new CPUValues();
     List<CPUValues> cpuCores = new ArrayList<>();
+    List<String> cpuNames = new ArrayList<>();
     int cpuCount = 0;
 
     RAMValues ram = new RAMValues();

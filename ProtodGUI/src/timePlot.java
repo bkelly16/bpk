@@ -29,14 +29,6 @@ public class timePlot extends JFrame
       chartPanel.setMouseZoomable( true , false );
       chartPanel.setPreferredSize( new java.awt.Dimension( 560 , 367 ) );
       setContentPane( chartPanel );
-      //showChart();
-      
-      //final XYPlot plot = xylineChart.getXYPlot( );
-      //XYLineAndShapeRenderer renderer = new XYLineAndShapeRenderer( );
-      //renderer.setSeriesPaint( 0 , Color.RED );
-      //renderer.setSeriesStroke( 0 , new BasicStroke( 4.0f ) );
-      //plot.setRenderer( renderer ); 
-
     }
 
     private XYDataset createDataset(String title, List<Long> set, List<Long> timeSet)
